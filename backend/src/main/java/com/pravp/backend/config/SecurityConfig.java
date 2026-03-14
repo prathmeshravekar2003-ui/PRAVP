@@ -25,13 +25,16 @@ public class SecurityConfig {
                 this.authenticationProvider = authenticationProvider;
         }
 
+        @org.springframework.beans.factory.annotation.Value("${cors.allowed-origins:http://localhost:5173}")
+        private String allowedOrigins;
+
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 .csrf(AbstractHttpConfigurer::disable)
                                 .cors(cors -> cors.configurationSource(request -> {
                                         var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-                                        corsConfiguration.setAllowedOrigins(java.util.List.of("http://localhost:5173"));
+                                        corsConfiguration.setAllowedOriginPatterns(java.util.Arrays.asList(allowedOrigins.split(",")));
                                         corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT",
                                                         "DELETE", "PATCH", "OPTIONS"));
                                         corsConfiguration.setAllowedHeaders(java.util.List.of("*"));
