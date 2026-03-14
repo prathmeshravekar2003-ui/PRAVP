@@ -2,7 +2,7 @@ package com.pravp.backend.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Document(collection = "reconduct_logs")
 public class ReconductLog {
@@ -12,12 +12,12 @@ public class ReconductLog {
     private String studentId;
     private String examId;
     private String reason;
-    private LocalDateTime timestamp;
+    private Instant timestamp;
 
     public ReconductLog() {
     }
 
-    public ReconductLog(String instructorId, String studentId, String examId, String reason, LocalDateTime timestamp) {
+    public ReconductLog(String instructorId, String studentId, String examId, String reason, Instant timestamp) {
         this.instructorId = instructorId;
         this.studentId = studentId;
         this.examId = examId;
@@ -65,11 +65,11 @@ public class ReconductLog {
         this.reason = reason;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 }

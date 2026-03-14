@@ -9,6 +9,7 @@ import com.pravp.backend.model.User;
 import com.pravp.backend.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -96,7 +97,7 @@ public class InstructorExamService {
         examAttemptService.deleteExamAttempt(studentExamId);
 
         // Record reconduct log
-        ReconductLog log = new ReconductLog(instructorId, se.getStudentId(), se.getExamId(), reason, LocalDateTime.now());
+        ReconductLog log = new ReconductLog(instructorId, se.getStudentId(), se.getExamId(), reason, Instant.now());
         reconductLogRepository.save(log);
     }
 

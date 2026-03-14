@@ -1,13 +1,13 @@
 package com.pravp.backend.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public class StudentExamAttemptDTO {
     private String id;
     private String studentId;
     private String studentName;
     private String examId;
-    private LocalDateTime startTime;
+    private Instant startTime;
     private String status;
     private Boolean isSuspicious;
     private long alertCount;
@@ -16,7 +16,7 @@ public class StudentExamAttemptDTO {
     }
 
     public StudentExamAttemptDTO(String id, String studentId, String studentName, String examId, 
-                                LocalDateTime startTime, String status, Boolean isSuspicious, long alertCount) {
+                                 Instant startTime, String status, Boolean isSuspicious, long alertCount) {
         this.id = id;
         this.studentId = studentId;
         this.studentName = studentName;
@@ -59,11 +59,11 @@ public class StudentExamAttemptDTO {
         this.examId = examId;
     }
 
-    public LocalDateTime getStartTime() {
+    public Instant getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(Instant startTime) {
         this.startTime = startTime;
     }
 
