@@ -6,7 +6,8 @@ import com.pravp.backend.model.*;
 import com.pravp.backend.repository.*;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.Duration;
 import java.util.Optional;
 
 @Service
@@ -50,8 +51,8 @@ public class ExamAttemptService {
         StudentExam studentExam = new StudentExam();
         studentExam.setStudentId(studentId);
         studentExam.setExamId(examId);
-        studentExam.setStartTime(LocalDateTime.now());
-        studentExam.setEndTime(LocalDateTime.now().plusMinutes(exam.getDuration()));
+        studentExam.setStartTime(Instant.now());
+        studentExam.setEndTime(Instant.now().plus(Duration.ofMinutes(exam.getDuration())));
         studentExam.setStatus("STARTED");
 
         StudentExam saved = studentExamRepository.save(studentExam);
@@ -66,7 +67,7 @@ public class ExamAttemptService {
             throw new RuntimeException("Cannot save answer for a finished exam");
         }
 
-        if (LocalDateTime.now().isAfter(studentExam.getEndTime())) {
+        if (Instant.now().isAfter(studentExam.getEndTime())) {
             submitExam(studentExam.getId(), "AUTO_SUBMITTED");
             throw new RuntimeException("Exam time expired and automatically submitted");
         }

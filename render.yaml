@@ -1,0 +1,17 @@
+services:
+  # Backend Service (Docker)
+  - type: web
+    name: anticheat-backend
+    env: docker
+    dockerContext: backend
+    dockerfilePath: backend/Dockerfile
+    plan: free # Can be changed to 'starter' for more RAM
+    envVars:
+      - key: MONGODB_URI
+        sync: false # User must set this in Render Dashboard -> Environment
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        value: "*" # Use "*" for development/testing, or specific Vercel URL for production
+      - key: JWT_EXPIRATION
+        value: 86400

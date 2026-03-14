@@ -2,7 +2,7 @@ package com.pravp.backend.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Document(collection = "student_exams")
 public class StudentExam {
@@ -10,8 +10,8 @@ public class StudentExam {
     private String id;
     private String studentId;
     private String examId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Instant startTime;
+    private Instant endTime;
     private String status; // STARTED, SUBMITTED, AUTO_SUBMITTED
     private Boolean isSuspicious = false;
 
@@ -42,19 +42,17 @@ public class StudentExam {
         this.examId = examId;
     }
 
-    public LocalDateTime getStartTime() {
+    public Instant getStartTime() {
         return startTime;
     }
-
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(Instant startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getEndTime() {
+    public Instant getEndTime() {
         return endTime;
     }
-
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndTime(Instant endTime) {
         this.endTime = endTime;
     }
 

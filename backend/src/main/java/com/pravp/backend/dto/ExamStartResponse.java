@@ -1,13 +1,13 @@
 package com.pravp.backend.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public class ExamStartResponse {
     private String studentExamId;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private Instant startTime;
+    private Instant endTime;
 
-    public ExamStartResponse(String studentExamId, LocalDateTime startTime, LocalDateTime endTime) {
+    public ExamStartResponse(String studentExamId, Instant startTime, Instant endTime) {
         this.studentExamId = studentExamId;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -17,11 +17,10 @@ public class ExamStartResponse {
         return studentExamId;
     }
 
-    public LocalDateTime getStartTime() {
+    public Instant getStartTime() {
         return startTime;
     }
-
-    public LocalDateTime getEndTime() {
+    public Instant getEndTime() {
         return endTime;
     }
 }
