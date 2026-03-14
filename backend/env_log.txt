@@ -1,0 +1,215 @@
+[INFO] Scanning for projects...
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-help-plugin/3.5.1/maven-help-plugin-3.5.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-help-plugin/3.5.1/maven-help-plugin-3.5.1.pom (10 kB at 14 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-help-plugin/3.5.1/maven-help-plugin-3.5.1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-help-plugin/3.5.1/maven-help-plugin-3.5.1.jar (65 kB at 578 kB/s)
+[INFO] 
+[INFO] -------------------------< com.pravp:backend >--------------------------
+[INFO] Building backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- help:3.5.1:system (default-cli) @ backend ---
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-tools-generators/3.13.1/maven-plugin-tools-generators-3.13.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-tools-generators/3.13.1/maven-plugin-tools-generators-3.13.1.pom (4.1 kB at 49 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-tools/3.13.1/maven-plugin-tools-3.13.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-tools/3.13.1/maven-plugin-tools-3.13.1.pom (18 kB at 258 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M3/org.eclipse.sisu.plexus-0.9.0.M3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M3/org.eclipse.sisu.plexus-0.9.0.M3.pom (17 kB at 221 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/sisu-inject/0.9.0.M3/sisu-inject-0.9.0.M3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/sisu-inject/0.9.0.M3/sisu-inject-0.9.0.M3.pom (24 kB at 322 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M3/org.eclipse.sisu.inject-0.9.0.M3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M3/org.eclipse.sisu.inject-0.9.0.M3.pom (20 kB at 284 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jsoup/jsoup/1.17.2/jsoup-1.17.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jsoup/jsoup/1.17.2/jsoup-1.17.2.pom (16 kB at 207 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/4.0.0/maven-reporting-api-4.0.0.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/4.0.0/maven-reporting-api-4.0.0.pom (2.8 kB at 33 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/43/maven-shared-components-43.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/43/maven-shared-components-43.pom (3.8 kB at 50 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interactivity-api/1.3/plexus-interactivity-api-1.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interactivity-api/1.3/plexus-interactivity-api-1.3.pom (1.7 kB at 21 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interactivity/1.3/plexus-interactivity-1.3.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interactivity/1.3/plexus-interactivity-1.3.pom (1.9 kB at 24 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/thoughtworks/xstream/xstream/1.4.20/xstream-1.4.20.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/thoughtworks/xstream/xstream/1.4.20/xstream-1.4.20.pom (25 kB at 355 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/thoughtworks/xstream/xstream-parent/1.4.20/xstream-parent-1.4.20.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/thoughtworks/xstream/xstream-parent/1.4.20/xstream-parent-1.4.20.pom (44 kB at 574 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/io/github/x-stream/mxparser/1.2.2/mxparser-1.2.2.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/io/github/x-stream/mxparser/1.2.2/mxparser-1.2.2.pom (24 kB at 302 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.pom
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.pom (386 B at 4.8 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-tools-generators/3.13.1/maven-plugin-tools-generators-3.13.1.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M3/org.eclipse.sisu.plexus-0.9.0.M3.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M3/org.eclipse.sisu.inject-0.9.0.M3.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jsoup/jsoup/1.17.2/jsoup-1.17.2.jar
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/4.0.0/maven-reporting-api-4.0.0.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-tools-generators/3.13.1/maven-plugin-tools-generators-3.13.1.jar (44 kB at 591 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interactivity-api/1.3/plexus-interactivity-api-1.3.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interactivity-api/1.3/plexus-interactivity-api-1.3.jar (10 kB at 71 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/thoughtworks/xstream/xstream/1.4.20/xstream-1.4.20.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/4.0.0/maven-reporting-api-4.0.0.jar (9.8 kB at 45 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/io/github/x-stream/mxparser/1.2.2/mxparser-1.2.2.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M3/org.eclipse.sisu.plexus-0.9.0.M3.jar (216 kB at 616 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.jar
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/io/github/x-stream/mxparser/1.2.2/mxparser-1.2.2.jar (30 kB at 84 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M3/org.eclipse.sisu.inject-0.9.0.M3.jar (434 kB at 964 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/xmlpull/xmlpull/1.1.3.1/xmlpull-1.1.3.1.jar (7.2 kB at 15 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jsoup/jsoup/1.17.2/jsoup-1.17.2.jar (446 kB at 839 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/com/thoughtworks/xstream/xstream/1.4.20/xstream-1.4.20.jar (645 kB at 1.2 MB/s)
+[INFO] 
+===============================================================================
+========================= Platform Properties Details =========================
+===============================================================================
+
+===============================================================================
+System Properties
+===============================================================================
+
+java.specification.version=20
+sun.cpu.isalist=amd64
+sun.jnu.encoding=Cp1252
+java.class.path=C:\Users\DELL\.m2\wrapper\dists\apache-maven-3.9.12\59fe215c0ad6947fea90184bf7add084544567b927287592651fda3782e0e798\boot\plexus-classworlds-2.9.0.jar
+java.vm.vendor=Oracle Corporation
+sun.arch.data.model=64
+user.variant=
+java.vendor.url=https://java.oracle.com/
+user.timezone=Asia/Calcutta
+maven.conf=C:\Users\DELL\.m2\wrapper\dists\apache-maven-3.9.12\59fe215c0ad6947fea90184bf7add084544567b927287592651fda3782e0e798/conf
+java.vm.specification.version=20
+os.name=Windows 11
+sun.java.launcher=SUN_STANDARD
+user.country=IN
+sun.boot.library.path=C:\Program Files\Java\jdk-20\bin
+sun.java.command=org.codehaus.plexus.classworlds.launcher.Launcher help:system -l env_log.txt
+guice_custom_class_loading=CHILD
+jdk.debug=release
+maven.home=C:\Users\DELL\.m2\wrapper\dists\apache-maven-3.9.12\59fe215c0ad6947fea90184bf7add084544567b927287592651fda3782e0e798
+sun.cpu.endian=little
+user.home=C:\Users\DELL
+user.language=en
+java.specification.vendor=Oracle Corporation
+jansi.mode=strip
+java.version.date=2023-07-18
+java.home=C:\Program Files\Java\jdk-20
+file.separator=\
+java.vm.compressedOopsMode=32-bit
+line.separator=
+
+java.vm.specification.vendor=Oracle Corporation
+java.specification.name=Java Platform API Specification
+user.script=
+sun.management.compiler=HotSpot 64-Bit Tiered Compilers
+java.runtime.version=20.0.2+9-78
+user.name=DELL
+stdout.encoding=cp437
+path.separator=;
+os.version=10.0
+java.runtime.name=Java(TM) SE Runtime Environment
+file.encoding=UTF-8
+guice.disable.misplaced.annotation.check=true
+java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+java.vendor.url.bug=https://bugreport.java.com/bugreport/
+java.io.tmpdir=C:\Users\DELL\AppData\Local\Temp\
+java.version=20.0.2
+user.dir=C:\Users\DELL\OneDrive\Documents\p.s.h.w\Desktop\Java Full Stack\PRAVP\backend\backend
+os.arch=amd64
+maven.multiModuleProjectDirectory=C:\Users\DELL\OneDrive\Documents\p.s.h.w\Desktop\Java Full Stack\PRAVP\backend\backend
+java.vm.specification.name=Java Virtual Machine Specification
+sun.os.patch.level=
+native.encoding=Cp1252
+java.library.path=C:\Program Files\Java\jdk-20\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk-20\bin;C:\Users\DELL\OneDrive\Documents\p.s.h.w\Desktop\python Prathmesh;C:\Program Files\nodejs\;C:\TDM-GCC-64\bin;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\DELL\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\DELL\AppData\Local\Programs\Python\Python312\;C:\Users\DELL\AppData\Local\Microsoft\WindowsApps;;C:\Users\DELL\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\DELL\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\DELL\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA 2025.3\bin;C:\Users\DELL\AppData\Local\Programs\Antigravity\bin;c:\Users\DELL\.antigravity\extensions\vscjava.vscode-java-debug-0.58.5-universal\bundled\scripts\noConfigScripts;.
+java.vm.info=mixed mode, sharing
+stderr.encoding=cp437
+java.vendor=Oracle Corporation
+java.vm.version=20.0.2+9-78
+classworlds.conf=C:\Users\DELL\.m2\wrapper\dists\apache-maven-3.9.12\59fe215c0ad6947fea90184bf7add084544567b927287592651fda3782e0e798\bin\m2.conf
+sun.io.unicode.encoding=UnicodeLittle
+library.jansi.path=C:\Users\DELL\.m2\wrapper\dists\apache-maven-3.9.12\59fe215c0ad6947fea90184bf7add084544567b927287592651fda3782e0e798\lib\jansi-native
+java.class.version=64.0
+
+===============================================================================
+Environment Variables
+===============================================================================
+
+USERDOMAIN_ROAMINGPROFILE=DESKTOP-O13SQ7D
+PATH=C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk-20\bin;C:\Users\DELL\OneDrive\Documents\p.s.h.w\Desktop\python Prathmesh;C:\Program Files\nodejs\;C:\TDM-GCC-64\bin;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\DELL\AppData\Local\Programs\Python\Python312\Scripts\;C:\Users\DELL\AppData\Local\Programs\Python\Python312\;C:\Users\DELL\AppData\Local\Microsoft\WindowsApps;;C:\Users\DELL\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\DELL\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;C:\Users\DELL\AppData\Roaming\npm;C:\Program Files\JetBrains\IntelliJ IDEA 2025.3\bin;C:\Users\DELL\AppData\Local\Programs\Antigravity\bin;c:\Users\DELL\.antigravity\extensions\vscjava.vscode-java-debug-0.58.5-universal\bundled\scripts\noConfigScripts
+SYSTEMDRIVE=C:
+PROCESSOR_LEVEL=6
+SESSIONNAME=Console
+ALLUSERSPROFILE=C:\ProgramData
+PROCESSOR_ARCHITECTURE=AMD64
+VSCODE_PYTHON_AUTOACTIVATE_GUARD=1
+VSCODE_GIT_IPC_HANDLE=\\.\pipe\vscode-git-cf9b6a27d8-sock
+DRIVERDATA=C:\Windows\System32\Drivers\DriverData
+MAVEN_HOME=C:\Users\DELL\.m2\wrapper\dists\apache-maven-3.9.12\59fe215c0ad6947fea90184bf7add084544567b927287592651fda3782e0e798
+PROGRAMFILES=C:\Program Files
+VSCODE_INJECTION=1
+PSMODULEPATH=C:\Users\DELL\OneDrive\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+COLORTERM=truecolor
+PROGRAMDATA=C:\ProgramData
+USERNAME=DELL
+VSCODE_GIT_ASKPASS_NODE=C:\Users\DELL\AppData\Local\Programs\Antigravity\Antigravity.exe
+TERM_PROGRAM_VERSION=1.107.0
+GIT_ASKPASS=c:\Users\DELL\AppData\Local\Programs\Antigravity\resources\app\extensions\git\dist\askpass.sh
+WDIR=C:\Users\DELL\OneDrive\Documents\p.s.h.w\Desktop\Java Full Stack\PRAVP\backend\backend
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_23464_JTSMNSZPDKZLIWUK
+ONEDRIVE=C:\Users\DELL\OneDrive
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+__MVNW_CMD__=C:\Users\DELL/.m2/wrapper/dists/apache-maven-3.9.12/59fe215c0ad6947fea90184bf7add084544567b927287592651fda3782e0e798/bin/mvn.cmd
+PAGER=cat
+ONEDRIVECONSUMER=C:\Users\DELL\OneDrive
+CLASSWORLDS_JAR="C:\Users\DELL\.m2\wrapper\dists\apache-maven-3.9.12\59fe215c0ad6947fea90184bf7add084544567b927287592651fda3782e0e798\boot\plexus-classworlds-2.9.0.jar"
+WINDIR=C:\WINDOWS
+HOMEPATH=\Users\DELL
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 126 Stepping 5, GenuineIntel
+PUBLIC=C:\Users\Public
+=EXITCODE=00000000
+ZES_ENABLE_SYSMAN=1
+INTERNAL_MAVEN_OPTS=--enable-native-access=ALL-UNNAMED 
+LOCALAPPDATA=C:\Users\DELL\AppData\Local
+COMMONPROGRAMFILES(X86)=C:\Program Files (x86)\Common Files
+USERDOMAIN=DESKTOP-O13SQ7D
+LOGONSERVER=\\DESKTOP-O13SQ7D
+JAVA_HOME=C:\Program Files\Java\jdk-20
+PROMPT=$P$G
+PROGRAMFILES(X86)=C:\Program Files (x86)
+LANG=en_US.UTF-8
+ERROR_CODE=0
+EXEC_DIR=C:\Users\DELL\OneDrive\Documents\p.s.h.w\Desktop\Java Full Stack\PRAVP\backend\backend
+INTELLIJ IDEA=C:\Program Files\JetBrains\IntelliJ IDEA 2025.3\bin
+VSCODE_GIT_ASKPASS_MAIN=c:\Users\DELL\AppData\Local\Programs\Antigravity\resources\app\extensions\git\dist\askpass-main.js
+=C:=C:\Users\DELL\OneDrive\Documents\p.s.h.w\Desktop\Java Full Stack\PRAVP\backend\backend
+APPDATA=C:\Users\DELL\AppData\Roaming
+PROGRAMW6432=C:\Program Files
+SYSTEMROOT=C:\WINDOWS
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+MAVEN_CMD_LINE_ARGS=help:system -l env_log.txt
+ANTIGRAVITY_CLI_ALIAS=agy
+OS=Windows_NT
+TERM_PROGRAM=vscode
+VSCODE_JDWP_ADAPTER_ENDPOINTS=c:\Users\DELL\.antigravity\extensions\vscjava.vscode-java-debug-0.58.5-universal\.noConfigDebugAdapterEndpoints\endpoint-1914b7a88f778546.txt
+GCC=C:\MinGW\bin\gcc.exe
+COMPUTERNAME=DESKTOP-O13SQ7D
+COMMONPROGRAMW6432=C:\Program Files\Common Files
+COMMONPROGRAMFILES=C:\Program Files\Common Files
+COMSPEC=C:\WINDOWS\system32\cmd.exe
+JAVACMD=C:\Program Files\Java\jdk-20\bin\java.exe
+MAVEN_PROJECTBASEDIR=C:\Users\DELL\OneDrive\Documents\p.s.h.w\Desktop\Java Full Stack\PRAVP\backend\backend
+PROCESSOR_REVISION=7e05
+CLASSWORLDS_LAUNCHER=org.codehaus.plexus.classworlds.launcher.Launcher
+TEMP=C:\Users\DELL\AppData\Local\Temp
+EFC_2516_1592913036=1
+HOMEDRIVE=C:
+USERPROFILE=C:\Users\DELL
+TMP=C:\Users\DELL\AppData\Local\Temp
+NUMBER_OF_PROCESSORS=4
+JVMCONFIG=\.mvn\jvm.config
+ANTIGRAVITY_AGENT=1
+VSCODE_JAVA_EXEC=C:\Program Files\Java\jdk-20\bin\java
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.420 s
+[INFO] Finished at: 2026-03-06T18:54:02+05:30
+[INFO] ------------------------------------------------------------------------
