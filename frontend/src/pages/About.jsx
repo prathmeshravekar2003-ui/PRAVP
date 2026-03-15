@@ -87,19 +87,19 @@ const About = () => {
             className="min-h-screen bg-white italic-none overflow-x-hidden"
         >
             {/* Mission Hero Section */}
-            <section className="relative pt-32 pb-40 overflow-hidden bg-slate-50">
+            <section className="relative pt-24 pb-32 sm:pt-32 sm:pb-40 overflow-hidden bg-slate-50">
                 <div className="absolute inset-0 gradient-mesh opacity-40"></div>
                 <div className="container mx-auto px-6 relative z-10 text-center">
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white border border-slate-100 shadow-xl shadow-indigo-50/50 text-indigo-600 mb-12"
+                        className="inline-flex items-center gap-3 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-white border border-slate-100 shadow-xl shadow-indigo-50/50 text-indigo-600 mb-8 sm:mb-12"
                     >
                         <ShieldCheck size={18} className="animate-pulse" />
-                        <span className="text-[10px] font-black tracking-[0.3em] uppercase">The Foundation of Trust</span>
+                        <span className="text-[10px] font-black tracking-[0.2em] sm:tracking-[0.3em] uppercase leading-none overflow-hidden whitespace-nowrap">The Foundation of Trust</span>
                     </motion.div>
 
-                    <h1 className="text-6xl md:text-9xl font-black text-slate-900 mb-10 tracking-tighter leading-[0.85]">
+                    <h1 className="text-4xl sm:text-7xl md:text-9xl font-black text-slate-900 mb-6 sm:mb-10 tracking-tighter leading-[1] sm:leading-[0.85]">
                         <SplitText text="Pioneering the Standards" className="block" />
                         <span className="text-indigo-600 block">
                             <SplitText text="of Academic Integrity." />
@@ -110,7 +110,7 @@ const About = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.8, duration: 0.8 }}
-                        className="text-2xl text-slate-500 font-medium max-w-3xl mx-auto leading-relaxed"
+                        className="text-lg sm:text-xl md:text-2xl text-slate-500 font-medium max-w-3xl mx-auto leading-relaxed"
                     >
                         We believe education is the currency of the future. Our mission is to protect that value through the world's most advanced, sub-millisecond proctoring ecosystem.
                     </motion.p>
@@ -134,9 +134,9 @@ const About = () => {
             </section>
 
             {/* Core Values - Interactive Grid */}
-            <section className="py-40 relative z-10 bg-white">
+            <section className="py-24 sm:py-40 relative z-10 bg-white">
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
                         {[
                             {
                                 icon: <Zap className="text-indigo-600" size={32} />,
@@ -159,12 +159,12 @@ const About = () => {
                                 desc: 'Designing technology that supports students, not scares them.'
                             }
                         ].map((val, i) => (
-                            <TiltCard key={i} delay={i * 0.1} className="p-10 rounded-[3rem] bg-slate-50 border border-slate-100 shadow- premium-sm hover:shadow-premium group transition-all duration-500">
-                                <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center mb-8 shadow-inner group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
+                            <TiltCard key={i} delay={i * 0.1} className="p-8 sm:p-10 rounded-[2rem] sm:rounded-[3rem] bg-slate-50 border border-slate-100 shadow- premium-sm hover:shadow-premium group transition-all duration-500">
+                                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white flex items-center justify-center mb-6 sm:mb-8 shadow-inner group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
                                     {val.icon}
                                 </div>
-                                <h3 className="text-xl font-black text-slate-900 uppercase tracking-widest mb-4 group-hover:text-indigo-600 transition-colors">{val.title}</h3>
-                                <p className="text-slate-500 font-medium leading-relaxed">{val.desc}</p>
+                                <h3 className="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-widest mb-3 sm:mb-4 group-hover:text-indigo-600 transition-colors">{val.title}</h3>
+                                <p className="text-sm sm:text-base text-slate-500 font-medium leading-relaxed">{val.desc}</p>
                             </TiltCard>
                         ))}
                     </div>
@@ -172,21 +172,21 @@ const About = () => {
             </section>
 
             {/* Narrative Scroll Experience */}
-            <section className="py-40 bg-slate-900 overflow-hidden relative">
+            <section className="py-24 sm:py-40 bg-slate-900 overflow-hidden relative">
                 <div className="container mx-auto px-6 relative z-10">
-                    <div className="flex flex-col md:flex-row items-center gap-24">
-                        <div className="md:w-1/2 space-y-12">
+                    <div className="flex flex-col md:flex-row items-center gap-16 sm:gap-24">
+                        <div className="md:w-1/2 space-y-8 sm:space-y-12">
                             <motion.h2 
                                 initial={{ opacity: 0, x: -30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                className="text-6xl font-black text-white tracking-tighter leading-none"
+                                className="text-4xl sm:text-6xl font-black text-white tracking-tighter leading-none"
                             >
                                 Beyond <br /> Surveillance: <br /> <span className="text-indigo-400">Trust.</span>
                             </motion.h2>
-                            <p className="text-xl text-slate-300 font-medium leading-relaxed">
+                            <p className="text-lg sm:text-xl text-slate-300 font-medium leading-relaxed">
                                 Our journey is defined by the institutions we protect. We don't just build software; we build the infrastructure for fair outcome.
                             </p>
-                            <div className="grid grid-cols-1 gap-6">
+                            <div className="grid grid-cols-1 gap-4 sm:gap-6">
                                 {[
                                     'Advanced Gaze & Behavioral Mapping',
                                     'Encrypted, Transparent Result Forensics',
@@ -197,9 +197,9 @@ const About = () => {
                                         initial={{ opacity: 0, y: 10 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         transition={{ delay: i * 0.1 }}
-                                        className="flex items-center gap-4 text-white font-bold"
+                                        className="flex items-center gap-4 text-white text-sm sm:text-base font-bold"
                                     >
-                                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-indigo-400">
+                                        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-indigo-400 shrink-0">
                                             <CheckCircle2 size={18} />
                                         </div>
                                         {item}
@@ -211,12 +211,12 @@ const About = () => {
                         <div className="md:w-1/2 relative">
                             <motion.div 
                                 style={{ y: springParallax }}
-                                className="relative rounded-[5rem] overflow-hidden border-8 border-white/5 shadow-2xl z-10"
+                                className="relative rounded-[2.5rem] sm:rounded-[5rem] overflow-hidden border-4 sm:border-8 border-white/5 shadow-2xl z-10"
                             >
                                 <img 
                                     src="https://images.unsplash.com/photo-1522071823991-b9671f30c46f?q=80&w=2070" 
                                     alt="Institutional Partnership" 
-                                    className="w-full h-[600px] object-cover hover:scale-105 transition-transform duration-1000"
+                                    className="w-full h-[400px] sm:h-[600px] object-cover hover:scale-105 transition-transform duration-1000"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
                             </motion.div>
@@ -228,7 +228,7 @@ const About = () => {
             </section>
 
             {/* Immersive Quote Section */}
-            <section className="py-56 bg-white relative overflow-hidden">
+            <section className="py-32 sm:py-56 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-6 text-center relative z-10">
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.8 }}
@@ -236,15 +236,15 @@ const About = () => {
                         transition={{ duration: 1 }}
                         className="max-w-5xl mx-auto"
                     >
-                        <Award size={100} className="mx-auto text-indigo-500/20 mb-16" />
-                        <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9] mb-16">
+                        <Award size={60} className="mx-auto text-indigo-500/20 mb-8 sm:mb-16 sm:size-[100px]" />
+                        <h2 className="text-3xl sm:text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[1.1] sm:leading-[0.9] mb-10 sm:mb-16">
                             "The integrity of the academic record is the currency of our future. We ensure it <span className="text-indigo-600 italic">never</span> loses value."
                         </h2>
                         <div className="flex flex-col items-center gap-4">
-                            <div className="w-20 h-1 bg-indigo-600 rounded-full"></div>
+                            <div className="w-16 sm:w-20 h-1 bg-indigo-600 rounded-full"></div>
                             <div>
-                                <p className="text-xl font-black text-slate-900 uppercase tracking-widest">Dr. Sarah Jenkins</p>
-                                <p className="text-xs font-black text-indigo-500 uppercase tracking-[0.4em] mt-1">Chief Integrity Officer</p>
+                                <p className="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-widest">Dr. Sarah Jenkins</p>
+                                <p className="text-[10px] sm:text-xs font-black text-indigo-500 uppercase tracking-[0.4em] mt-1">Chief Integrity Officer</p>
                             </div>
                         </div>
                     </motion.div>
@@ -264,16 +264,16 @@ const About = () => {
                     <motion.div 
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="gradient-indigo p-20 rounded-[4rem] text-center text-white shadow-premium relative overflow-hidden"
+                        className="gradient-indigo p-10 sm:p-20 rounded-[2.5rem] sm:rounded-[4rem] text-center text-white shadow-premium relative overflow-hidden"
                     >
-                        <div className="relative z-10 space-y-10">
-                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-8 leading-none">Ready to Defend Excellence?</h2>
-                            <p className="text-xl text-indigo-100 max-w-xl mx-auto font-medium">Join the 500+ institutions currently setting the global standard for examination security.</p>
-                            <div className="flex flex-col sm:flex-row justify-center gap-6 pt-6">
-                                <Link to="/register" className="px-12 py-6 bg-white text-indigo-600 rounded-3xl font-black text-xl hover:scale-105 transition-all shadow-xl">
+                        <div className="relative z-10 space-y-8 sm:space-y-10">
+                            <h2 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter mb-4 sm:mb-8 leading-[1.1] sm:leading-none">Ready to Defend Excellence?</h2>
+                            <p className="text-lg sm:text-xl text-indigo-100 max-w-xl mx-auto font-medium">Join the 500+ institutions currently setting the global standard for examination security.</p>
+                            <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 pt-4 sm:pt-6">
+                                <Link to="/register" className="px-10 sm:px-12 py-5 sm:py-6 bg-white text-indigo-600 rounded-2xl sm:rounded-3xl font-black text-lg sm:text-xl hover:scale-105 transition-all shadow-xl text-center">
                                     Start Free Trial
                                 </Link>
-                                <Link to="/contact" className="px-12 py-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl font-black text-xl hover:bg-white/20 transition-all">
+                                <Link to="/contact" className="px-10 sm:px-12 py-5 sm:py-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-3xl font-black text-lg sm:text-xl hover:bg-white/20 transition-all text-center">
                                     Schedule a Consult
                                 </Link>
                             </div>

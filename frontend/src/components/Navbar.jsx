@@ -15,7 +15,7 @@ import {
     Zap
 } from 'lucide-react';
 
-const Navbar = () => {
+const Navbar = ({ onMenuClick, isDashboard }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -50,7 +50,15 @@ const Navbar = () => {
             <div className="container mx-auto px-6">
                 <div className="flex items-center">
                     {/* Left: Logo Section */}
-                    <div className="flex-1 flex justify-start">
+                    <div className="flex-1 flex justify-start items-center gap-4">
+                        {isDashboard && (
+                            <button
+                                onClick={onMenuClick}
+                                className="lg:hidden p-3 rounded-2xl bg-white/50 backdrop-blur-md border border-slate-200/50 text-slate-600 shadow-sm active:scale-90 transition-all"
+                            >
+                                <Menu size={24} />
+                            </button>
+                        )}
                         <Link to="/" className="flex items-center group">
                             <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center shadow-xl group-hover:scale-105 transition-all duration-500 p-2 overflow-hidden border border-white/50 animate-logo-pulse">
                                 <img src="/thinkle.png" alt="Thinkle" className="w-full h-full object-contain" />
@@ -144,12 +152,14 @@ const Navbar = () => {
 
                         {/* Mobile Menu Button Section */}
                         <div className="md:hidden flex items-center">
-                            <button
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                className="p-3 rounded-2xl bg-white/50 backdrop-blur-md border border-slate-200/50 text-slate-600 shadow-sm active:scale-90 transition-all"
-                            >
-                                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                            </button>
+                            {!isDashboard && (
+                                <button
+                                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                    className="p-3 rounded-2xl bg-white/50 backdrop-blur-md border border-slate-200/50 text-slate-600 shadow-sm active:scale-90 transition-all"
+                                >
+                                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

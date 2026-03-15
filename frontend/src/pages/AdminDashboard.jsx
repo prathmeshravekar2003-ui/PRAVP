@@ -182,10 +182,12 @@ const AdminDashboard = () => {
                         </h3>
                         <div className="flex gap-2">
                             <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse mt-1" />
-                            <span className="text-xs font-bold text-gray-500 uppercase tracking-widest">Active Monitoring</span>
+                            <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest hidden sm:inline">Active Monitoring</span>
                         </div>
                     </div>
-                    <div className="overflow-x-auto">
+                    
+                    {/* Desktop View Table */}
+                    <div className="hidden lg:block overflow-x-auto">
                         <table className="w-full text-left">
                             <thead>
                                 <tr className="bg-white text-gray-400 text-[10px] font-black uppercase tracking-[0.2em] border-b border-gray-100">
@@ -208,15 +210,13 @@ const AdminDashboard = () => {
                                             <p className="text-xs text-gray-400">{new Date(exam.startTime).toLocaleTimeString()}</p>
                                         </td>
                                         <td className="px-6 py-4">
-                                            <div className="flex items-center gap-2">
-                                                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
-                                                    exam.cheatingCount > 10 ? 'bg-red-100 text-red-700 border-red-200' :
-                                                    exam.cheatingCount > 0 ? 'bg-amber-100 text-amber-700 border-amber-200' :
-                                                    'bg-green-100 text-green-700 border-green-200'
-                                                }`}>
-                                                    {exam.cheatingCount} Issues
-                                                </span>
-                                            </div>
+                                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                                                exam.cheatingCount > 10 ? 'bg-red-100 text-red-700 border-red-200' :
+                                                exam.cheatingCount > 0 ? 'bg-amber-100 text-amber-700 border-amber-200' :
+                                                'bg-green-100 text-green-700 border-green-200'
+                                            }`}>
+                                                {exam.cheatingCount} Issues
+                                            </span>
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center gap-2">
@@ -228,35 +228,61 @@ const AdminDashboard = () => {
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                <button 
-                                                    onClick={() => handleReconduct(exam.id)}
-                                                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
-                                                    title="Reconduct Immediately"
-                                                >
+                                                <button onClick={() => handleReconduct(exam.id)} className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Reconduct">
                                                     <RotateCcw size={18} />
                                                 </button>
-                                                <button 
-                                                    onClick={() => setSelectedExamId(exam.examId)}
-                                                    className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all"
-                                                >
+                                                <button onClick={() => setSelectedExamId(exam.examId)} className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all">
                                                     <Monitor size={18} />
                                                 </button>
                                             </div>
                                         </td>
                                     </tr>
                                 ))}
-                                {activeExams.length === 0 && (
-                                    <tr>
-                                        <td colSpan="5" className="px-6 py-20 text-center">
-                                            <div className="flex flex-col items-center gap-2">
-                                                <Activity className="text-gray-200 h-12 w-12" />
-                                                <p className="text-gray-400 font-medium font-mono text-xs uppercase tracking-widest">No Active Sessions Detected</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                )}
                             </tbody>
                         </table>
+                    </div>
+
+                    {/* Mobile View Cards */}
+                    <div className="lg:hidden p-4 space-y-4 bg-gray-50/30">
+                        {activeExams.map((exam, idx) => (
+                            <div key={idx} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+                                <div className="flex justify-between items-start">
+                                    <div>
+                                        <p className="font-black text-gray-900">{exam.studentId}</p>
+                                        <p className="text-[10px] text-gray-400 font-mono">@{examTitles[exam.examId] || 'System'}</p>
+                                    </div>
+                                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                                        exam.cheatingCount > 10 ? 'bg-red-100 text-red-700 border-red-200' :
+                                        exam.cheatingCount > 0 ? 'bg-amber-100 text-amber-700 border-amber-200' :
+                                        'bg-green-100 text-green-700 border-green-200'
+                                    }`}>
+                                        {exam.cheatingCount} Issues
+                                    </span>
+                                </div>
+                                <div className="flex items-center justify-between gap-4">
+                                    <div className="flex-1">
+                                        <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden mb-1">
+                                            <div className="h-full bg-blue-500 rounded-full" style={{ width: '45%' }} />
+                                        </div>
+                                        <p className="text-[10px] font-bold text-blue-600 uppercase tracking-widest">{exam.status}</p>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <button onClick={() => handleReconduct(exam.id)} className="p-2.5 bg-red-50 text-red-600 rounded-xl shadow-sm active:scale-90 transition-all border border-red-100">
+                                            <RotateCcw size={18} />
+                                        </button>
+                                        <button onClick={() => setSelectedExamId(exam.examId)} className="p-2.5 bg-blue-50 text-blue-600 rounded-xl shadow-sm active:scale-90 transition-all border border-blue-100">
+                                            <Monitor size={18} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        {activeExams.length === 0 && (
+                            <div className="py-12 text-center opacity-50">
+                                <Activity className="text-gray-200 h-10 w-10 mx-auto mb-2" />
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-loose">No Active Sessions</p>
+                            </div>
+                        )}
                     </div>
                 </div>
 

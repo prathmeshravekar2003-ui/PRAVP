@@ -10,10 +10,11 @@ import {
     ClipboardList, 
     Users2,
     Shield,
-    Activity
+    Activity,
+    X
 } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
     const { user } = useAuth();
 
     const studentLinks = [
@@ -38,9 +39,26 @@ const Sidebar = () => {
     const links = user?.role === 'STUDENT' ? studentLinks : user?.role === 'INSTRUCTOR' ? instructorLinks : [...instructorLinks, ...adminLinks];
 
     return (
-        <aside className="fixed top-0 left-0 z-40 w-64 h-full pt-20 transition-transform bg-white border-r border-slate-100 lg:translate-x-0">
-            <div className="h-full px-4 py-6 overflow-y-auto bg-white flex flex-col justify-between">
-                <div>
+        <>
+            {/* Backdrop for mobile */}
+            {isOpen && (
+                <div 
+                    className="fixed inset-0 z-30 bg-black/20 backdrop-blur-sm lg:hidden transition-opacity"
+                    onClick={onClose}
+                />
+            )}
+            
+            <aside className={`fixed top-0 left-0 z-40 w-64 h-full pt-20 transition-transform duration-300 ease-in-out bg-white border-r border-slate-100 lg:translate-x-0 ${
+                isOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}>
+                <div className="h-full px-4 py-6 overflow-y-auto bg-white flex flex-col justify-between">
+                    <div>
+                        <div className="flex justify-between items-center mb-6 px-3 lg:hidden">
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Navigation</p>
+                            <button onClick={onClose} className="p-2 -mr-2 text-slate-400 hover:text-slate-600">
+                                <X size={20} />
+                            </button>
+                        </div>
                     <div className="mb-6 px-3">
                         <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Main Menu</p>
                         <ul className="space-y-2">
@@ -97,6 +115,7 @@ const Sidebar = () => {
                 </div>
             </div>
         </aside>
+        </>
     );
 };
 

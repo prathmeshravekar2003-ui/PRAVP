@@ -180,7 +180,7 @@ const Home = () => {
                                 <span className="text-[10px] font-black tracking-[0.3em] uppercase">Architecture of Integrity</span>
                             </motion.div>
 
-                            <h1 className="text-7xl md:text-9xl font-black text-slate-900 leading-[0.85] tracking-tighter">
+                            <h1 className="text-5xl sm:text-7xl md:text-9xl font-black text-slate-900 leading-[0.9] sm:leading-[0.85] tracking-tighter">
                                 <SplitText text="Secure Exams," className="block mb-2" />
                                 <span className="text-indigo-600 block">
                                     <SplitText text="Pure Integrity." />
@@ -189,20 +189,20 @@ const Home = () => {
 
                             <motion.p 
                                 variants={fadeInUp}
-                                className="text-2xl text-slate-600 font-medium leading-relaxed max-w-xl"
+                                className="text-lg sm:text-xl md:text-2xl text-slate-600 font-medium leading-relaxed max-w-xl"
                             >
                                 Elevate institutional standards with proprietary AI proctoring, sub-100ms sync, and deep behavioral forensics.
                             </motion.p>
 
                             <motion.div 
                                 variants={fadeInUp}
-                                className="flex flex-wrap gap-6 pt-6"
+                                className="flex flex-col sm:flex-row gap-4 sm:gap-6 pt-6"
                             >
-                                <Link to="/register" className="px-12 py-6 gradient-indigo rounded-[2rem] font-black text-lg shadow-[0_20px_40px_-12px_rgba(79,70,229,0.4)] hover:shadow-[0_25px_50px_-12px_rgba(79,70,229,0.5)] hover:-translate-y-1 active:translate-y-0 transition-all flex items-center gap-4 group">
+                                <Link to="/register" className="px-8 sm:px-12 py-5 sm:py-6 gradient-indigo rounded-2xl sm:rounded-[2rem] font-black text-base sm:text-lg shadow-xl hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-4 group">
                                     Experience the Platform
                                     <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
                                 </Link>
-                                <Link to="/about" className="px-12 py-6 bg-white text-slate-900 rounded-[2rem] font-black text-lg border border-slate-200 hover:bg-slate-50 transition-all shadow-sm">
+                                <Link to="/about" className="px-8 sm:px-12 py-5 sm:py-6 bg-white text-slate-900 rounded-2xl sm:rounded-[2rem] font-black text-base sm:text-lg border border-slate-200 hover:bg-slate-50 transition-all shadow-sm text-center">
                                     Our Methodology
                                 </Link>
                             </motion.div>
@@ -215,8 +215,8 @@ const Home = () => {
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            <div className="relative z-10 rounded-[4rem] overflow-hidden shadow-[0_48px_80px_-16px_rgba(0,0,0,0.15)] bg-white p-3">
-                                <div className="rounded-[3.5rem] overflow-hidden">
+                            <div className="relative z-10 rounded-[2.5rem] md:rounded-[4rem] overflow-hidden shadow-[0_48px_80px_-16px_rgba(0,0,0,0.15)] bg-white p-2 sm:p-3">
+                                <div className="rounded-[2rem] md:rounded-[3.5rem] overflow-hidden aspect-square sm:aspect-auto">
                                     <img 
                                         src="/premium-hero.png" 
                                         alt="Platform Preview" 
@@ -239,7 +239,7 @@ const Home = () => {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-16">
                         {[
                             { label: 'Trusted Partners', value: '500+', sub: 'Global Institutions' },
-                            { label: 'Integrity Rate', value: '99.9%', sub: 'Forensic Accuracy' },
+                            { label: 'Integrity Rate', value: '99%', sub: 'Forensic Accuracy' },
                             { label: 'Sessions Saved', value: '2M+', sub: 'Academic Sessions' },
                             { label: 'Latency Speed', value: '85ms', sub: 'Real-time Sync' },
                         ].map((stat, i) => (
@@ -250,12 +250,12 @@ const Home = () => {
                                 transition={{ delay: i * 0.1 }}
                                 className="text-center group"
                             >
-                                <div className="text-6xl font-black text-slate-900 mb-3 tracking-tighter group-hover:text-indigo-600 transition-colors">
+                                <div className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 mb-2 sm:mb-3 tracking-tighter group-hover:text-indigo-600 transition-colors">
                                     <CountUp value={stat.value} />
                                 </div>
-                                <div className="space-y-1">
-                                    <span className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] block">{stat.label}</span>
-                                    <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block">{stat.sub}</span>
+                                <div className="space-y-0.5 sm:space-y-1">
+                                    <span className="text-[9px] sm:text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] sm:tracking-[0.3em] block">{stat.label}</span>
+                                    <span className="text-[8px] sm:text-[10px] font-bold text-indigo-400 uppercase tracking-widest block">{stat.sub}</span>
                                 </div>
                             </motion.div>
                         ))}
@@ -277,14 +277,14 @@ const Home = () => {
                         <motion.h2 
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            className="text-6xl md:text-7xl font-black text-slate-900 mb-10 tracking-tighter"
+                            className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 mb-6 sm:mb-10 tracking-tighter leading-tight sm:leading-none"
                         >
                             The Future of <br className="hidden md:block" /> Secure Assessment
                         </motion.h2>
                         <motion.p 
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
-                            className="text-2xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed"
+                            className="text-lg sm:text-2xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed"
                         >
                             Built on a foundation of ethical AI and sub-millisecond network architecture.
                         </motion.p>
@@ -310,13 +310,13 @@ const Home = () => {
                         ].map((feat, i) => (
                             <TiltCard 
                                 key={i} 
-                                className="glass-card p-14 rounded-[4rem] group cursor-pointer shadow-premium"
+                                className="glass-card p-8 sm:p-14 rounded-[2rem] sm:rounded-[4rem] group cursor-pointer shadow-premium"
                             >
-                                <div className="w-24 h-24 rounded-3xl bg-indigo-50 border border-indigo-100 flex items-center justify-center mb-12 group-hover:bg-indigo-600 group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_20px_40px_-10px_rgba(79,70,229,0.3)]">
-                                    {feat.icon && React.cloneElement(feat.icon, { className: "group-hover:text-white transition-colors duration-500 w-10 h-10" })}
+                                <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-indigo-50 border border-indigo-100 flex items-center justify-center mb-8 sm:mb-12 group-hover:bg-indigo-600 group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_20px_40px_-10px_rgba(79,70,229,0.3)]">
+                                    {feat.icon && React.cloneElement(feat.icon, { className: "group-hover:text-white transition-colors duration-500 w-8 h-8 sm:w-10 sm:h-10" })}
                                 </div>
-                                <h3 className="text-3xl font-black text-slate-900 mb-6 tracking-tight leading-none">{feat.title}</h3>
-                                <p className="text-slate-500 font-medium leading-relaxed text-lg">{feat.desc}</p>
+                                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mb-4 sm:mb-6 tracking-tight leading-none">{feat.title}</h3>
+                                <p className="text-slate-500 font-medium leading-relaxed text-base sm:text-lg">{feat.desc}</p>
                             </TiltCard>
                         ))}
                     </div>
@@ -361,44 +361,44 @@ const Home = () => {
                                     <motion.div 
                                         key={i}
                                         variants={fadeInUp}
-                                        className="flex gap-10 group"
+                                        className="flex flex-col sm:flex-row gap-6 sm:gap-10 group"
                                     >
-                                        <div className="flex-shrink-0 w-20 h-20 rounded-3xl bg-slate-900 text-white flex items-center justify-center font-black text-2xl group-hover:bg-indigo-600 group-hover:rotate-6 transition-all duration-500 shadow-xl">
+                                        <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-slate-900 text-white flex items-center justify-center font-black text-xl sm:text-2xl group-hover:bg-indigo-600 group-hover:rotate-6 transition-all duration-500 shadow-xl">
                                             {item.step}
                                         </div>
-                                        <div className="pt-3">
-                                            <h4 className="text-2xl font-black text-slate-900 mb-3 tracking-tight flex items-center gap-4">
+                                        <div className="pt-0 sm:pt-3">
+                                            <h4 className="text-xl sm:text-2xl font-black text-slate-900 mb-2 sm:mb-3 tracking-tight flex items-center gap-4">
                                                 {item.title}
-                                                <item.icon size={22} className="text-indigo-400 group-hover:text-indigo-600 group-hover:scale-110 transition-all" />
+                                                <item.icon size={20} className="text-indigo-400 group-hover:text-indigo-600 group-hover:scale-110 transition-all" />
                                             </h4>
-                                            <p className="text-xl text-slate-500 font-medium leading-relaxed">{item.desc}</p>
+                                            <p className="text-base sm:text-xl text-slate-500 font-medium leading-relaxed">{item.desc}</p>
                                         </div>
                                     </motion.div>
                                 ))}
                             </motion.div>
                         </div>
                         <div className="md:w-1/2 order-1 md:order-2">
-                            <motion.div 
+                             <motion.div 
                                 initial={{ opacity: 0, x: 50, rotate: 5 }}
                                 whileInView={{ opacity: 1, x: 0, rotate: 0 }}
                                 transition={{ duration: 1, ease: "easeOut" }}
-                                className="relative rounded-[5rem] overflow-hidden shadow-premium p-6 bg-slate-50 border border-slate-200 group"
+                                className="relative rounded-[2.5rem] sm:rounded-[5rem] overflow-hidden shadow-premium p-4 sm:p-6 bg-slate-50 border border-slate-200 group"
                             >
-                                <div className="rounded-[4rem] overflow-hidden bg-slate-900 aspect-[4/3] flex items-center justify-center relative">
-                                    <GraduationCap size={150} className="text-indigo-500/50 animate-float" />
+                                <div className="rounded-[2rem] sm:rounded-[4rem] overflow-hidden bg-slate-900 aspect-square sm:aspect-[4/3] flex items-center justify-center relative">
+                                    <GraduationCap className="text-indigo-500/50 animate-float size-24 sm:size-36 lg:size-[150px]" />
                                     <div className="absolute inset-0 bg-gradient-to-tr from-indigo-600/30 to-transparent mix-blend-overlay"></div>
                                     
                                     {/* Animated UI Overlay Mockup */}
                                     <motion.div 
                                         animate={{ y: [0, -10, 0] }}
                                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                        className="absolute top-10 right-10 w-32 h-16 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-center"
+                                        className="absolute top-6 right-6 sm:top-10 sm:right-10 w-24 sm:w-32 h-12 sm:h-16 bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl border border-white/20 flex items-center justify-center"
                                     >
-                                        <div className="w-12 h-2 bg-indigo-400 rounded-full animate-pulse"></div>
+                                        <div className="w-8 sm:w-12 h-1.5 sm:h-2 bg-indigo-400 rounded-full animate-pulse"></div>
                                     </motion.div>
                                 </div>
-                                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-indigo-600 rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
-                                    <ShieldCheck size={48} />
+                                <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 w-20 h-20 sm:w-32 sm:h-32 bg-indigo-600 rounded-[1.5rem] sm:rounded-[2.5rem] flex items-center justify-center text-white shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                                    <ShieldCheck className="size-8 sm:size-12" />
                                 </div>
                             </motion.div>
                         </div>
@@ -409,32 +409,32 @@ const Home = () => {
             {/* CTA Section - Kinetic Entrance */}
             <section className="py-40">
                 <div className="container mx-auto px-6 text-center">
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.9, y: 50 }}
-                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="gradient-indigo p-24 md:p-40 rounded-[5rem] relative overflow-hidden shadow-[0_40px_100px_-20px_rgba(79,70,229,0.4)]"
-                    >
-                        <div className="absolute bottom-0 left-0 p-20 opacity-5 -translate-x-1/2 translate-y-1/2 grayscale rotate-45">
-                            <Globe size={600} />
-                        </div>
-                        <div className="relative z-10 space-y-12">
-                            <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] max-w-5xl mx-auto">
-                                The Standard for <br className="hidden md:block"/> Academic Outcome.
-                            </h2>
-                            <p className="text-2xl text-indigo-100 font-medium max-w-xl mx-auto opacity-80 lg:text-3xl">
-                                Join 500+ elite institutions. <br /> Start your secure journey today.
-                            </p>
-                            <div className="flex flex-col sm:flex-row justify-center gap-8 pt-6">
-                                <Link to="/register" className="px-14 py-7 bg-white text-indigo-600 rounded-[2.5rem] font-black text-2xl hover:scale-105 hover:shadow-2xl active:scale-95 transition-all flex items-center justify-center gap-4">
-                                    Get Started Project <ChevronRight size={32} />
-                                </Link>
-                                <Link to="/contact" className="px-14 py-7 bg-indigo-500/30 backdrop-blur-xl border border-indigo-200/20 text-white rounded-[2.5rem] font-black text-2xl hover:bg-white hover:text-indigo-600 transition-all">
-                                    Book Live Demo
-                                </Link>
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.9, y: 50 }}
+                            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="gradient-indigo p-12 sm:p-24 md:p-40 rounded-[2.5rem] sm:rounded-[5rem] relative overflow-hidden shadow-[0_40px_100px_-20px_rgba(79,70,229,0.4)]"
+                        >
+                            <div className="absolute bottom-0 left-0 p-20 opacity-5 -translate-x-1/2 translate-y-1/2 grayscale rotate-45">
+                                <Globe size={600} />
                             </div>
-                        </div>
-                    </motion.div>
+                            <div className="relative z-10 space-y-8 sm:space-y-12">
+                                <h2 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter leading-[1] sm:leading-[0.9] max-w-5xl mx-auto">
+                                    The Standard for <br className="hidden md:block"/> Academic Outcome.
+                                </h2>
+                                <p className="text-lg sm:text-2xl text-indigo-100 font-medium max-w-xl mx-auto opacity-80 lg:text-3xl">
+                                    Join 500+ elite institutions. <br className="hidden sm:block" /> Start your secure journey today.
+                                </p>
+                                <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 pt-4 sm:pt-6">
+                                    <Link to="/register" className="px-8 sm:px-14 py-4 sm:py-7 bg-white text-indigo-600 rounded-2xl sm:rounded-[2.5rem] font-black text-xl sm:text-2xl hover:scale-105 hover:shadow-2xl active:scale-95 transition-all flex items-center justify-center gap-4">
+                                        Get Started <ChevronRight size={32} />
+                                    </Link>
+                                    <Link to="/contact" className="px-8 sm:px-14 py-4 sm:py-7 bg-indigo-500/30 backdrop-blur-xl border border-indigo-200/20 text-white rounded-2xl sm:rounded-[2.5rem] font-black text-xl sm:text-2xl hover:bg-white hover:text-indigo-600 transition-all text-center">
+                                        Book Live Demo
+                                    </Link>
+                                </div>
+                            </div>
+                        </motion.div>
                 </div>
             </section>
         </motion.div>

@@ -4,7 +4,7 @@ import api from '../services/api';
 import { 
     Loader2, AlertTriangle, ShieldCheck, RefreshCw, X, 
     Users, AlertCircle, CheckCircle2, Flag, ArrowLeft, 
-    Filter, Download, Search, Info, Target, Check
+    Filter, Download, Search, Info, Target, Check, Clock
 } from 'lucide-react';
 
 const ExamAttempts = () => {
@@ -225,14 +225,10 @@ const ExamAttempts = () => {
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
-                    <div className="flex gap-2">
-                        <button className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-600">
-                            <Filter size={16} /> Filters
-                        </button>
-                    </div>
                 </div>
 
-                <div className="overflow-x-auto">
+                {/* Desktop view: Table */}
+                <div className="hidden lg:block overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
                             <tr className="bg-gray-50/80 text-gray-500 text-xs font-bold uppercase tracking-wider">
@@ -319,6 +315,77 @@ const ExamAttempts = () => {
                             ))}
                         </tbody>
                     </table>
+                </div>
+
+                {/* Mobile view: Card list */}
+                <div className="lg:hidden p-4 space-y-4 bg-gray-50/30">
+                    {filteredAttempts.length === 0 ? (
+                        <div className="p-12 text-center">
+                            <Info size={40} className="mx-auto text-gray-300 mb-3" />
+                            <p className="text-gray-500 font-medium">No attempts match your search.</p>
+                        </div>
+                    ) : filteredAttempts.map(attempt => (
+                        <div key={attempt.id} className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm space-y-4">
+                            <div className="flex justify-between items-start">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center font-bold text-gray-600 text-xs shrink-0">
+                                        {attempt.studentName?.charAt(0)}
+                                    </div>
+                                    <div className="min-w-0">
+                                        <p className="font-bold text-gray-900 truncate">{attempt.studentName}</p>
+                                        <p className="text-[10px] text-gray-400 font-mono truncate">{attempt.studentId}</p>
+                                    </div>
+                                </div>
+                                <span className={`px-2 py-0.5 rounded-full text-[8px] font-black tracking-widest uppercase shadow-sm shrink-0
+                                    ${attempt.status === 'SUBMITTED' || attempt.status === 'AUTO_SUBMITTED' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>
+                                    {attempt.status}
+                                </span>
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-2">
+                                <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold border
+                                    ${attempt.alertCount > 10 ? 'bg-red-50 text-red-700 border-red-200' : 
+                                      attempt.alertCount > 5 ? 'bg-amber-50 text-amber-700 border-amber-200' : 
+                                      attempt.alertCount > 0 ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-gray-50 text-gray-400 border-gray-100'}
+                                `}>
+                                    <AlertCircle size={12} />
+                                    {attempt.alertCount} Alerts
+                                </div>
+                                {attempt.isSuspicious && (
+                                    <span className="flex items-center gap-0.5 text-red-600 font-black text-[9px] uppercase tracking-tighter">
+                                        <Flag size={12} className="fill-red-600" /> Suspicious
+                                    </span>
+                                )}
+                                <span className="text-[10px] text-gray-400 flex items-center gap-1 ml-auto">
+                                    <Clock size={12} /> {new Date(attempt.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-gray-50">
+                                <button 
+                                    onClick={() => viewPerformanceReport(attempt)} 
+                                    className="flex items-center justify-center gap-1.5 py-2.5 bg-indigo-50 text-indigo-600 rounded-xl text-[10px] font-black uppercase tracking-wider active:scale-95 transition-all"
+                                >
+                                    <Target size={14} /> Report
+                                </button>
+                                <button 
+                                    onClick={() => viewAlerts(attempt)} 
+                                    className="flex items-center justify-center gap-1.5 py-2.5 bg-blue-50 text-blue-600 rounded-xl text-[10px] font-black uppercase tracking-wider active:scale-95 transition-all"
+                                >
+                                    Details
+                                </button>
+                            </div>
+
+                            <div className="flex justify-between items-center gap-2 pt-1">
+                                <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Intervention</span>
+                                <div className="flex bg-gray-50 p-1 rounded-xl gap-1">
+                                    <button onClick={() => handleAction(attempt.id, 'approve')} className="p-2 text-green-600 hover:bg-white rounded-lg transition-all active:scale-90" title="Approve"><CheckCircle2 size={16} /></button>
+                                    <button onClick={() => handleAction(attempt.id, 'flag')} className="p-2 text-amber-600 hover:bg-white rounded-lg transition-all active:scale-90" title="Flag"><Flag size={16} /></button>
+                                    <button onClick={() => handleAction(attempt.id, 'reconduct')} className="p-2 text-red-600 hover:bg-white rounded-lg transition-all active:scale-90" title="Reconduct"><RefreshCw size={16} /></button>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
