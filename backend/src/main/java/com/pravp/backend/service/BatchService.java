@@ -78,6 +78,24 @@ public class BatchService {
                 .orElseThrow(() -> new RuntimeException("Batch not found"));
     }
 
+    public List<com.pravp.backend.dto.UserDTO> getBatchStudents(String batchId) {
+        Batch batch = batchRepository.findById(batchId)
+                .orElseThrow(() -> new RuntimeException("Batch not found"));
+        return userRepository.findByEmailIn(batch.getStudentEmails()).stream()
+                .map(this::convertToUserDTO)
+                .collect(Collectors.toList());
+    }
+
+    private com.pravp.backend.dto.UserDTO convertToUserDTO(User user) {
+        return new com.pravp.backend.dto.UserDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail(),
+                user.getRole(),
+                user.getCreatedAt(),
+                user.isEnabled());
+    }
+
     public BatchResponse addStudent(String batchId, String studentEmail) {
         Batch batch = batchRepository.findById(batchId)
                 .orElseThrow(() -> new RuntimeException("Batch not found"));

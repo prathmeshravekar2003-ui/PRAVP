@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Plus, Save, Trash2, Calendar, Clock, BookOpen, AlertCircle, Loader2, FileText, Upload } from 'lucide-react';
+import { Plus, Save, Trash2, Calendar, Clock, BookOpen, AlertCircle, Loader2, FileText, Upload, Users, CheckSquare, Square } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const CreateExam = () => {
@@ -14,12 +14,80 @@ const CreateExam = () => {
         startTime: '',
         endTime: '',
         totalMarks: 0,
-        status: 'DRAFT'
+        status: 'DRAFT',
+        batchIds: [],
+        studentEmails: []
     });
+    
+    const [availableBatches, setAvailableBatches] = useState([]);
+    const [studentsByBatch, setStudentsByBatch] = useState({}); // { batchId: [students] }
+    const [fetchingBatches, setFetchingBatches] = useState(false);
+    const [fetchingStudents, setFetchingStudents] = useState(false);
 
     const [questions, setQuestions] = useState([
         { questionText: '', options: ['', '', '', ''], correctAnswer: 0, marks: 5, difficultyLevel: 'MEDIUM' }
     ]);
+    
+    useEffect(() => {
+        fetchBatches();
+    }, []);
+
+    const fetchBatches = async () => {
+        setFetchingBatches(true);
+        try {
+            const response = await api.get('/batches');
+            setAvailableBatches(response.data || []);
+        } catch (err) {
+            console.error('Failed to fetch batches:', err);
+        } finally {
+            setFetchingBatches(false);
+        }
+    };
+
+    const fetchStudentsForBatch = async (batchId) => {
+        if (studentsByBatch[batchId]) return; // Already fetched
+        
+        setFetchingStudents(true);
+        try {
+            const response = await api.get(`/batches/${batchId}/students`);
+            setStudentsByBatch(prev => ({ ...prev, [batchId]: response.data || [] }));
+        } catch (err) {
+            console.error(`Failed to fetch students for batch ${batchId}:`, err);
+        } finally {
+            setFetchingStudents(false);
+        }
+    };
+
+    const toggleBatch = (batchId) => {
+        const isSelected = examData.batchIds.includes(batchId);
+        let newBatchIds;
+        if (isSelected) {
+            newBatchIds = examData.batchIds.filter(id => id !== batchId);
+            // Also clean up selected students from this batch
+            const batchStudentEmails = (studentsByBatch[batchId] || []).map(s => s.email);
+            const newStudentEmails = examData.studentEmails.filter(email => !batchStudentEmails.includes(email));
+            setExamData(prev => ({ ...prev, batchIds: newBatchIds, studentEmails: newStudentEmails }));
+        } else {
+            newBatchIds = [...examData.batchIds, batchId];
+            setExamData(prev => ({ ...prev, batchIds: newBatchIds }));
+            fetchStudentsForBatch(batchId);
+        }
+    };
+
+    const toggleStudent = (email) => {
+        const isSelected = examData.studentEmails.includes(email);
+        if (isSelected) {
+            setExamData(prev => ({
+                ...prev,
+                studentEmails: prev.studentEmails.filter(e => e !== email)
+            }));
+        } else {
+            setExamData(prev => ({
+                ...prev,
+                studentEmails: [...prev.studentEmails, email]
+            }));
+        }
+    };
 
     const handlePdfUpload = async (e) => {
         const file = e.target.files[0];
@@ -186,6 +254,94 @@ const CreateExam = () => {
                             className="w-full p-3 border border-gray-200 rounded-xl outline-none"
                         />
                     </div>
+                </div>
+
+                {/* Batch and Student Selection */}
+                <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 space-y-6">
+                    <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
+                        <Users className="text-blue-600" size={24} />
+                        <h3 className="text-lg font-bold text-gray-900">Batch & Student Assignment</h3>
+                    </div>
+
+                    <div className="space-y-4">
+                        <label className="block text-sm font-bold text-gray-700">Select Batches (Leave empty for all students)</label>
+                        {fetchingBatches ? (
+                            <div className="flex items-center gap-2 text-gray-500 text-sm">
+                                <Loader2 size={16} className="animate-spin" /> Loading batches...
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                                {availableBatches.map((batch) => (
+                                    <button
+                                        key={batch.id}
+                                        type="button"
+                                        onClick={() => toggleBatch(batch.id)}
+                                        className={`flex items-center gap-2 p-3 rounded-xl border transition-all text-sm font-medium ${examData.batchIds.includes(batch.id)
+                                                ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm'
+                                                : 'bg-gray-50 border-gray-100 text-gray-600 hover:border-blue-200'
+                                            }`}
+                                    >
+                                        {examData.batchIds.includes(batch.id) ? (
+                                            <CheckSquare size={18} className="shrink-0" />
+                                        ) : (
+                                            <Square size={18} className="shrink-0" />
+                                        )}
+                                        <span className="truncate">{batch.name}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {examData.batchIds.length > 0 && (
+                        <div className="space-y-4 pt-4 border-t border-gray-50">
+                            <label className="block text-sm font-bold text-gray-700">
+                                Specific Students (Optional - leave empty to select entire batch)
+                            </label>
+                            {fetchingStudents ? (
+                                <div className="flex items-center gap-2 text-gray-500 text-sm">
+                                    <Loader2 size={16} className="animate-spin" /> Loading students...
+                                </div>
+                            ) : (
+                                <div className="space-y-4">
+                                    {examData.batchIds.map(batchId => {
+                                        const batch = availableBatches.find(b => b.id === batchId);
+                                        const students = studentsByBatch[batchId] || [];
+                                        if (students.length === 0) return null;
+
+                                        return (
+                                            <div key={batchId} className="space-y-2">
+                                                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider">{batch?.name}</h4>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                                                    {students.map(student => (
+                                                        <button
+                                                            key={student.email}
+                                                            type="button"
+                                                            onClick={() => toggleStudent(student.email)}
+                                                            className={`flex items-center gap-2 p-2 rounded-lg border transition-all text-xs ${examData.studentEmails.includes(student.email)
+                                                                    ? 'bg-green-50 border-green-200 text-green-700'
+                                                                    : 'bg-white border-gray-100 text-gray-600 hover:border-green-200'
+                                                                }`}
+                                                        >
+                                                            {examData.studentEmails.includes(student.email) ? (
+                                                                <CheckSquare size={14} className="shrink-0" />
+                                                            ) : (
+                                                                <Square size={14} className="shrink-0" />
+                                                            )}
+                                                            <div className="text-left truncate">
+                                                                <div className="font-bold">{student.name}</div>
+                                                                <div className="text-[10px] opacity-70">{student.email}</div>
+                                                            </div>
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
+                    )}
                 </div>
 
                 {/* PDF Upload Section */}

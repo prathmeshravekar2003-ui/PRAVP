@@ -85,9 +85,23 @@ public class ExamService {
             List<String> studentBatchIds = batchService.getBatchIdsForStudent(user.getEmail());
             List<Exam> allPublished = examRepository.findByStatus(ExamStatus.PUBLISHED);
             List<Exam> filtered = allPublished.stream()
-                    .filter(exam -> exam.getBatchIds() == null
-                            || exam.getBatchIds().isEmpty()
-                            || exam.getBatchIds().stream().anyMatch(studentBatchIds::contains))
+                    .filter(exam -> {
+                        // 1. If batchIds are specified, student MUST be in one of those batches
+                        if (exam.getBatchIds() != null && !exam.getBatchIds().isEmpty()) {
+                            if (studentBatchIds.stream().noneMatch(exam.getBatchIds()::contains)) {
+                                return false;
+                            }
+                        }
+                        
+                        // 2. If studentEmails are specified, student MUST be in that list
+                        if (exam.getStudentEmails() != null && !exam.getStudentEmails().isEmpty()) {
+                            if (!exam.getStudentEmails().contains(user.getEmail())) {
+                                return false;
+                            }
+                        }
+                        
+                        return true;
+                    })
                     .collect(Collectors.toList());
 
             // Manual pagination
@@ -121,6 +135,9 @@ public class ExamService {
         if (request.getBatchIds() != null) {
             exam.setBatchIds(request.getBatchIds());
         }
+        if (request.getStudentEmails() != null) {
+            exam.setStudentEmails(request.getStudentEmails());
+        }
     }
 
     private ExamResponse mapModelToResponse(Exam exam) {
@@ -138,6 +155,7 @@ public class ExamService {
         response.setQuestions(exam.getQuestions());
         response.setAntiCheatConfig(exam.getAntiCheatConfig());
         response.setBatchIds(exam.getBatchIds());
+        response.setStudentEmails(exam.getStudentEmails());
         return response;
     }
 }

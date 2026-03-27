@@ -26,6 +26,7 @@ public class Exam {
     // Empty list = no batch restriction (visible to all students)
     // Non-empty = only students in matching batches can see this exam
     private List<String> batchIds = new ArrayList<>();
+    private List<String> studentEmails = new ArrayList<>();
 
     public Exam() {
     }
@@ -248,5 +249,13 @@ public class Exam {
 
     public void setBatchIds(List<String> batchIds) {
         this.batchIds = batchIds;
+    }
+
+    public List<String> getStudentEmails() {
+        return studentEmails;
+    }
+
+    public void setStudentEmails(List<String> studentEmails) {
+        this.studentEmails = studentEmails;
     }
 }

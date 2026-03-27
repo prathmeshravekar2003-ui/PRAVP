@@ -37,6 +37,7 @@ public class ExamRequest {
     private Exam.AntiCheatConfig antiCheatConfig;
 
     private List<String> batchIds;
+    private List<String> studentEmails;
 
     public ExamRequest() {
     }
@@ -119,5 +120,13 @@ public class ExamRequest {
 
     public void setBatchIds(List<String> batchIds) {
         this.batchIds = batchIds;
+    }
+
+    public List<String> getStudentEmails() {
+        return studentEmails;
+    }
+
+    public void setStudentEmails(List<String> studentEmails) {
+        this.studentEmails = studentEmails;
     }
 }

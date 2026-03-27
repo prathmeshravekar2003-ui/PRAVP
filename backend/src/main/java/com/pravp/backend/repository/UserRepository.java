@@ -20,4 +20,6 @@ public interface UserRepository extends MongoRepository<User, String> {
     Page<User> findByNameContainingIgnoreCaseAndRole(String name, Role role, Pageable pageable);
 
     List<User> findByRoleAndBatchIdIsNull(Role role);
+    
+    List<User> findByEmailIn(List<String> emails);
 }

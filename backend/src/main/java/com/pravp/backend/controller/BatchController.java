@@ -61,6 +61,13 @@ public class BatchController {
                 .ok(ApiResponse.success(batchService.updateBatch(id, request), "Batch updated successfully"));
     }
 
+    @GetMapping("/{id}/students")
+    @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
+    @Operation(summary = "Get all students in a batch")
+    public ResponseEntity<ApiResponse<List<com.pravp.backend.dto.UserDTO>>> getBatchStudents(@PathVariable String id) {
+        return ResponseEntity.ok(ApiResponse.success(batchService.getBatchStudents(id), "Batch students fetched successfully"));
+    }
+
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete a batch")

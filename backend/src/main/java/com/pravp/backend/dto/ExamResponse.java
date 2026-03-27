@@ -21,6 +21,7 @@ public class ExamResponse {
     private List<Exam.Question> questions;
     private Exam.AntiCheatConfig antiCheatConfig;
     private List<String> batchIds;
+    private List<String> studentEmails;
 
     public ExamResponse() {
     }
@@ -127,5 +128,13 @@ public class ExamResponse {
 
     public void setBatchIds(List<String> batchIds) {
         this.batchIds = batchIds;
+    }
+
+    public List<String> getStudentEmails() {
+        return studentEmails;
+    }
+
+    public void setStudentEmails(List<String> studentEmails) {
+        this.studentEmails = studentEmails;
     }
 }
