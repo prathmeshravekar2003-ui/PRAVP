@@ -37,7 +37,7 @@ function App() {
             <Route path="/about" element={<MainLayout><About /></MainLayout>} />
             <Route path="/features" element={<MainLayout><Features /></MainLayout>} />
             <Route path="/contact" element={<MainLayout><Contact /></MainLayout>} />
-            
+
             {/* Auth Routes (no footer) */}
             <Route path="/login" element={<MainLayout showFooter={false}><Login /></MainLayout>} />
             <Route path="/register" element={<MainLayout showFooter={false}><Register /></MainLayout>} />
@@ -121,7 +121,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
+            {/* <Route
               path="/monitoring"
               element={
                 <ProtectedRoute allowedRoles={['ADMIN', 'INSTRUCTOR']}>
@@ -130,7 +130,7 @@ function App() {
                   </DashboardLayout>
                 </ProtectedRoute>
               }
-            />
+            /> */}
             <Route
               path="/users"
               element={
