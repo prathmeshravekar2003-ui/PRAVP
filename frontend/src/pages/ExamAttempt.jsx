@@ -19,6 +19,7 @@ const ExamAttempt = () => {
     const [violationType, setViolationType] = useState('');
     const timerRef = useRef(null);
     const lastViolationRef = useRef(0);
+    const saveDebounceRef = useRef({});
 
     // Initialize Anti-cheat
     const { warnings } = useAntiCheat(examId, !loading);
@@ -173,22 +174,50 @@ const ExamAttempt = () => {
         
         setAnswers(prev => ({ ...prev, [questionId]: value }));
 
-        try {
-            const payload = {
-                studentExamId: examSession.studentExamId,
-                questionId: questionId
-            };
+        const doSave = async () => {
+            try {
+                const payload = {
+                    studentExamId: examSession.studentExamId,
+                    questionId: questionId
+                };
 
-            if (question.type === 'CODE') {
-                payload.codeAnswer = value;
-            } else {
-                payload.selectedOptionIndex = value;
+                if (question.type === 'CODE') {
+                    payload.codeAnswer = value;
+                } else {
+                    payload.selectedOptionIndex = value;
+                }
+
+                await api.post('/exam/save-answer', payload);
+            } catch (err) {
+                console.error('Failed to auto-save answer', err);
             }
+        };
 
-            await api.post('/exam/save-answer', payload);
-        } catch (err) {
-            console.error('Failed to auto-save answer', err);
+        // For CODE questions, debounce the save by 1.5s to avoid saving partial/in-progress code
+        if (question.type === 'CODE') {
+            if (saveDebounceRef.current[questionId]) {
+                clearTimeout(saveDebounceRef.current[questionId]);
+            }
+            saveDebounceRef.current[questionId] = setTimeout(doSave, 1500);
+        } else {
+            doSave();
         }
+    };
+
+    // Immediate save for CODE questions — bypasses debounce (used by the Save Code button)
+    const handleSaveCodeNow = async (code) => {
+        const question = questions[currentIndex];
+        const questionId = question.id;
+        // Cancel any pending debounced save first
+        if (saveDebounceRef.current[questionId]) {
+            clearTimeout(saveDebounceRef.current[questionId]);
+        }
+        setAnswers(prev => ({ ...prev, [questionId]: code }));
+        await api.post('/exam/save-answer', {
+            studentExamId: examSession.studentExamId,
+            questionId,
+            codeAnswer: code
+        });
     };
 
     const handleSubmit = async (isAuto = false) => {
@@ -271,6 +300,7 @@ const ExamAttempt = () => {
                             question={questions[currentIndex]}
                             answer={answers[questions[currentIndex].id]}
                             onAnswer={handleSaveAnswer}
+                            onSaveNow={handleSaveCodeNow}
                         />
                     )}
 

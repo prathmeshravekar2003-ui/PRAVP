@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Editor from '@monaco-editor/react';
-import { Play, CheckCircle2, XCircle, Loader2, Terminal } from 'lucide-react';
+import { Play, CheckCircle2, XCircle, Loader2, Terminal, Save, CloudCheck } from 'lucide-react';
 import api from '../services/api';
 
-const QuestionCard = ({ question, answer, onAnswer }) => {
+const QuestionCard = ({ question, answer, onAnswer, onSaveNow }) => {
     const [executing, setExecuting] = useState(false);
     const [execResult, setExecResult] = useState(null);
+    const [saveStatus, setSaveStatus] = useState('idle'); // 'idle' | 'saving' | 'saved' | 'error'
+    const editorRef = useRef(null);
+    const latestCodeRef = useRef(answer || question.templateCode);
+
+    // Keep latestCodeRef in sync when answer changes from outside (e.g. navigating between questions)
+    useEffect(() => {
+        // Only update if the editor is not focused (user isn't typing)
+        if (editorRef.current && !editorRef.current.hasTextFocus()) {
+            const current = editorRef.current.getValue();
+            const incoming = answer || question.templateCode;
+            if (current !== incoming) {
+                editorRef.current.setValue(incoming);
+            }
+        }
+        latestCodeRef.current = answer || question.templateCode;
+    }, [question.id]); // Reset when question changes
 
     const handleRunCode = async () => {
         setExecuting(true);
@@ -19,8 +35,9 @@ const QuestionCard = ({ question, answer, onAnswer }) => {
 
             const results = [];
             for (const tc of testCasesToRun) {
+                const currentCode = editorRef.current ? editorRef.current.getValue() : (answer || question.templateCode);
                 const response = await api.post('/api/exam/run-code', {
-                    code: answer || question.templateCode,
+                    code: currentCode,
                     input: tc.input || ''
                 });
                 const outputStr = String(response.output || '').trim();
@@ -43,6 +60,20 @@ const QuestionCard = ({ question, answer, onAnswer }) => {
             setExecResult({ results: [{ output: err.output || 'Error: ' + (err.message || 'Execution failed'), success: false, isMatch: false, hasExpected: false }], allPassed: false });
         } finally {
             setExecuting(false);
+        }
+    };
+
+    const handleSaveCode = async () => {
+        const currentCode = editorRef.current ? editorRef.current.getValue() : (answer || question.templateCode);
+        setSaveStatus('saving');
+        try {
+            await onSaveNow(currentCode);
+            setSaveStatus('saved');
+            setTimeout(() => setSaveStatus('idle'), 2000);
+        } catch (err) {
+            console.error('Save failed', err);
+            setSaveStatus('error');
+            setTimeout(() => setSaveStatus('idle'), 3000);
         }
     };
 
@@ -70,22 +101,63 @@ const QuestionCard = ({ question, answer, onAnswer }) => {
                             <div className="flex items-center gap-2 text-xs font-bold text-gray-500">
                                 <Terminal size={14} /> solution.c
                             </div>
-                            <button
-                                onClick={handleRunCode}
-                                disabled={executing}
-                                className="flex items-center gap-2 px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-xs font-bold transition-all disabled:bg-gray-400"
-                            >
-                                {executing ? <Loader2 size={14} className="animate-spin" /> : <Play size={14} />}
-                                Run Code (Alt + Enter)
-                            </button>
+                            <div className="flex items-center gap-2">
+                                {/* Save Code Button */}
+                                {onSaveNow && (
+                                    <button
+                                        onClick={handleSaveCode}
+                                        disabled={saveStatus === 'saving' || executing}
+                                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all disabled:opacity-60 ${
+                                            saveStatus === 'saved'
+                                                ? 'bg-green-100 text-green-700 border border-green-200'
+                                                : saveStatus === 'error'
+                                                ? 'bg-red-100 text-red-700 border border-red-200'
+                                                : saveStatus === 'saving'
+                                                ? 'bg-blue-100 text-blue-700 border border-blue-200'
+                                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300 border border-gray-300'
+                                        }`}
+                                    >
+                                        {saveStatus === 'saving' ? (
+                                            <><Loader2 size={12} className="animate-spin" /> Saving...</>
+                                        ) : saveStatus === 'saved' ? (
+                                            <><CheckCircle2 size={12} /> Saved!</>
+                                        ) : saveStatus === 'error' ? (
+                                            <><XCircle size={12} /> Failed</>
+                                        ) : (
+                                            <><Save size={12} /> Save Code</>
+                                        )}
+                                    </button>
+                                )}
+                                {/* Run Code Button */}
+                                <button
+                                    onClick={handleRunCode}
+                                    disabled={executing}
+                                    className="flex items-center gap-2 px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-xs font-bold transition-all disabled:bg-gray-400"
+                                >
+                                    {executing ? <Loader2 size={14} className="animate-spin" /> : <Play size={14} />}
+                                    Run Code (Alt + Enter)
+                                </button>
+                            </div>
                         </div>
                         <div className="flex-1">
                             <Editor
                                 height="100%"
                                 defaultLanguage="c"
                                 theme="vs-dark"
-                                value={answer || question.templateCode}
-                                onChange={(value) => onAnswer(value)}
+                                defaultValue={answer || question.templateCode}
+                                onMount={(editor, monaco) => {
+                                    editorRef.current = editor;
+                                    latestCodeRef.current = editor.getValue();
+                                    // Add Alt+Enter keyboard shortcut to run code
+                                    editor.addCommand(
+                                        monaco.KeyMod.Alt | monaco.KeyCode.Enter,
+                                        () => handleRunCode()
+                                    );
+                                }}
+                                onChange={(value) => {
+                                    latestCodeRef.current = value;
+                                    onAnswer(value);
+                                }}
                                 options={{
                                     fontSize: 14,
                                     minimap: { enabled: false },
