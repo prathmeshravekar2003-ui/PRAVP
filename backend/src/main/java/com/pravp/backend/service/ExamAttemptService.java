@@ -79,6 +79,7 @@ public class ExamAttemptService {
         answer.setStudentExamId(request.getStudentExamId());
         answer.setQuestionId(request.getQuestionId());
         answer.setSelectedOptionIndex(request.getSelectedOptionIndex());
+        answer.setCodeAnswer(request.getCodeAnswer());
 
         studentAnswerRepository.save(answer);
     }

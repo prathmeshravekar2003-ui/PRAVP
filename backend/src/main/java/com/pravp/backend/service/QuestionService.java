@@ -68,6 +68,9 @@ public class QuestionService {
         question.setCorrectAnswer(request.getCorrectAnswer());
         question.setMarks(request.getMarks());
         question.setDifficultyLevel(request.getDifficultyLevel());
+        question.setType(request.getType() != null ? request.getType() : com.pravp.backend.model.QuestionType.MCQ);
+        question.setTemplateCode(request.getTemplateCode());
+        question.setTestCases(request.getTestCases());
     }
 
     private QuestionResponse mapModelToResponse(Question question) {
@@ -80,6 +83,9 @@ public class QuestionService {
         response.setMarks(question.getMarks());
         response.setDifficultyLevel(question.getDifficultyLevel());
         response.setCreatedAt(question.getCreatedAt());
+        response.setType(question.getType());
+        response.setTemplateCode(question.getTemplateCode());
+        response.setTestCases(question.getTestCases());
         return response;
     }
 }

@@ -10,6 +10,7 @@ public class StudentAnswer {
     private String studentExamId;
     private String questionId;
     private Integer selectedOptionIndex;
+    private String codeAnswer;
     private Boolean isCorrect;
 
     public StudentAnswer() {
@@ -45,6 +46,14 @@ public class StudentAnswer {
 
     public void setSelectedOptionIndex(Integer selectedOptionIndex) {
         this.selectedOptionIndex = selectedOptionIndex;
+    }
+
+    public String getCodeAnswer() {
+        return codeAnswer;
+    }
+
+    public void setCodeAnswer(String codeAnswer) {
+        this.codeAnswer = codeAnswer;
     }
 
     public Boolean getIsCorrect() {

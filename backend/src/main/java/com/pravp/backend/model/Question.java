@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection = "questions")
 public class Question {
@@ -17,7 +18,29 @@ public class Question {
     private Integer correctAnswer; // Index of the correct option
     private Integer marks;
     private DifficultyLevel difficultyLevel;
+    private QuestionType type = QuestionType.MCQ;
+    private String templateCode;
+    private List<TestCase> testCases;
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public static class TestCase {
+        private String input;
+        private String expectedOutput;
+        @JsonProperty("isPublic")
+        private boolean isPublic;
+
+        public TestCase() {}
+
+        public String getInput() { return input; }
+        public void setInput(String input) { this.input = input; }
+        public String getExpectedOutput() { return expectedOutput; }
+        public void setExpectedOutput(String expectedOutput) { this.expectedOutput = expectedOutput; }
+        @JsonProperty("isPublic")
+        public boolean isPublic() { return isPublic; }
+        
+        @JsonProperty("isPublic")
+        public void setPublic(boolean isPublic) { this.isPublic = isPublic; }
+    }
 
     public Question() {
     }
@@ -96,5 +119,29 @@ public class Question {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public QuestionType getType() {
+        return type;
+    }
+
+    public void setType(QuestionType type) {
+        this.type = type;
+    }
+
+    public String getTemplateCode() {
+        return templateCode;
+    }
+
+    public void setTemplateCode(String templateCode) {
+        this.templateCode = templateCode;
+    }
+
+    public List<TestCase> getTestCases() {
+        return testCases;
+    }
+
+    public void setTestCases(List<TestCase> testCases) {
+        this.testCases = testCases;
     }
 }

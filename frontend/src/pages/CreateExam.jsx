@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Plus, Save, Trash2, Calendar, Clock, BookOpen, AlertCircle, Loader2, FileText, Upload, Users, CheckSquare, Square } from 'lucide-react';
+import { Plus, Save, Trash2, Calendar, Clock, BookOpen, AlertCircle, Loader2, FileText, Upload, Users, CheckSquare, Square, FileCode, Terminal, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const CreateExam = () => {
@@ -25,12 +25,26 @@ const CreateExam = () => {
     const [fetchingStudents, setFetchingStudents] = useState(false);
 
     const [questions, setQuestions] = useState([
-        { questionText: '', options: ['', '', '', ''], correctAnswer: 0, marks: 5, difficultyLevel: 'MEDIUM' }
+        { 
+            questionText: '', 
+            type: 'MCQ',
+            options: ['', '', '', ''], 
+            correctAnswer: 0, 
+            marks: 5, 
+            difficultyLevel: 'MEDIUM',
+            templateCode: '#include <stdio.h>\n\nint main() {\n    // Write your code here\n    return 0;\n}',
+            testCases: [{ input: '', expectedOutput: '', isPublic: true }]
+        }
     ]);
     
     useEffect(() => {
         fetchBatches();
     }, []);
+
+    useEffect(() => {
+        const total = questions.reduce((sum, q) => sum + (q.marks || 0), 0);
+        setExamData(prev => ({ ...prev, totalMarks: total }));
+    }, [questions]);
 
     const fetchBatches = async () => {
         setFetchingBatches(true);
@@ -111,10 +125,7 @@ const CreateExam = () => {
 
                 setQuestions(parsedQuestions);
 
-                // Estimate total marks
-                const total = parsedQuestions.reduce((sum, q) => sum + (q.marks || 0), 0);
-                setExamData(prev => ({ ...prev, totalMarks: total }));
-
+                setQuestions(parsedQuestions);
                 alert(`Successfully parsed ${parsedQuestions.length} questions!`);
             } else {
                 alert('Could not extract any questions from this PDF. Please try a different format.');
@@ -151,7 +162,16 @@ const CreateExam = () => {
     };
 
     const addQuestion = () => {
-        setQuestions([...questions, { questionText: '', options: ['', '', '', ''], correctAnswer: 0, marks: 5, difficultyLevel: 'MEDIUM' }]);
+        setQuestions([...questions, { 
+            questionText: '', 
+            type: 'MCQ',
+            options: ['', '', '', ''], 
+            correctAnswer: 0, 
+            marks: 5, 
+            difficultyLevel: 'MEDIUM',
+            templateCode: '#include <stdio.h>\n\nint main() {\n    // Write your code here\n    return 0;\n}',
+            testCases: [{ input: '', expectedOutput: '', isPublic: true }]
+        }]);
     };
 
     const removeQuestion = (index) => {
@@ -167,6 +187,24 @@ const CreateExam = () => {
     const updateOption = (qIdx, optIdx, value) => {
         const newQuestions = [...questions];
         newQuestions[qIdx].options[optIdx] = value;
+        setQuestions(newQuestions);
+    };
+
+    const addTestCase = (qIdx) => {
+        const newQuestions = [...questions];
+        newQuestions[qIdx].testCases.push({ input: '', expectedOutput: '', isPublic: true });
+        setQuestions(newQuestions);
+    };
+
+    const removeTestCase = (qIdx, tIdx) => {
+        const newQuestions = [...questions];
+        newQuestions[qIdx].testCases = newQuestions[qIdx].testCases.filter((_, i) => i !== tIdx);
+        setQuestions(newQuestions);
+    };
+
+    const updateTestCase = (qIdx, tIdx, field, value) => {
+        const newQuestions = [...questions];
+        newQuestions[qIdx].testCases[tIdx][field] = value;
         setQuestions(newQuestions);
     };
 
@@ -225,10 +263,9 @@ const CreateExam = () => {
                             <BookOpen className="absolute left-3 top-3 text-gray-400" size={18} />
                             <input
                                 type="number"
-                                required
+                                readOnly
                                 value={examData.totalMarks}
-                                onChange={(e) => setExamData({ ...examData, totalMarks: parseInt(e.target.value) })}
-                                className="w-full pl-10 p-3 border border-gray-200 rounded-xl outline-none"
+                                className="w-full pl-10 p-3 border border-gray-100 bg-gray-50 text-gray-500 rounded-xl outline-none cursor-not-allowed font-bold"
                             />
                         </div>
                     </div>
@@ -380,50 +417,160 @@ const CreateExam = () => {
                     <h3 className="text-xl font-bold text-gray-900">Question Bank</h3>
                     {questions.map((q, qIdx) => (
                         <div key={qIdx} className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative group">
-                            <button
-                                type="button"
-                                onClick={() => removeQuestion(qIdx)}
-                                className="absolute top-4 right-4 p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
-                            >
-                                <Trash2 size={20} />
-                            </button>
+                            <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="flex bg-gray-100 p-1 rounded-lg">
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQuestion(qIdx, 'type', 'MCQ')}
+                                        className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${q.type === 'MCQ' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                                    >
+                                        MCQ
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => updateQuestion(qIdx, 'type', 'CODE')}
+                                        className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${q.type === 'CODE' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+                                    >
+                                        CODE
+                                    </button>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => removeQuestion(qIdx)}
+                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                                >
+                                    <Trash2 size={20} />
+                                </button>
+                            </div>
 
                             <div className="mb-6">
-                                <label className="block text-sm font-bold text-gray-700 mb-2">Question {qIdx + 1}</label>
+                                <div className="flex items-center gap-2 mb-2">
+                                    <label className="block text-sm font-bold text-gray-700">Question {qIdx + 1}</label>
+                                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${q.type === 'CODE' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                                        {q.type}
+                                    </span>
+                                </div>
                                 <input
                                     type="text"
                                     required
                                     value={q.questionText}
                                     onChange={(e) => updateQuestion(qIdx, 'questionText', e.target.value)}
                                     className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="Enter question text..."
+                                    placeholder={q.type === 'CODE' ? "e.g. Write a program to find the factorial of a number..." : "Enter question text..."}
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {q.options.map((opt, oIdx) => (
-                                    <div key={oIdx} className="relative">
-                                        <span className="absolute left-3 top-3.5 text-xs font-bold text-gray-400">{String.fromCharCode(65 + oIdx)}</span>
-                                        <input
-                                            type="text"
-                                            required
-                                            value={opt}
-                                            onChange={(e) => updateOption(qIdx, oIdx, e.target.value)}
-                                            className={`w-full pl-8 p-3 border rounded-xl outline-none ${q.correctAnswer === oIdx ? 'border-green-500 bg-green-50' : 'border-gray-200'
-                                                }`}
-                                            placeholder={`Option ${oIdx + 1}`}
-                                        />
-                                        <input
-                                            type="radio"
-                                            name={`correct-${qIdx}`}
-                                            checked={q.correctAnswer === oIdx}
-                                            onChange={() => updateQuestion(qIdx, 'correctAnswer', oIdx)}
-                                            className="absolute right-3 top-4 cursor-pointer"
-                                            title="Mark as correct"
+                            {q.type === 'MCQ' ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {q.options.map((opt, oIdx) => (
+                                        <div key={oIdx} className="relative">
+                                            <span className="absolute left-3 top-3.5 text-xs font-bold text-gray-400">{String.fromCharCode(65 + oIdx)}</span>
+                                            <input
+                                                type="text"
+                                                required={q.type === 'MCQ'}
+                                                value={opt}
+                                                onChange={(e) => updateOption(qIdx, oIdx, e.target.value)}
+                                                className={`w-full pl-8 p-3 border rounded-xl outline-none ${q.correctAnswer === oIdx ? 'border-green-500 bg-green-50' : 'border-gray-200'
+                                                    }`}
+                                                placeholder={`Option ${oIdx + 1}`}
+                                            />
+                                            <input
+                                                type="radio"
+                                                name={`correct-${qIdx}`}
+                                                checked={q.correctAnswer === oIdx}
+                                                onChange={() => updateQuestion(qIdx, 'correctAnswer', oIdx)}
+                                                className="absolute right-3 top-4 cursor-pointer"
+                                                title="Mark as correct"
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="space-y-6">
+                                    {/* Template Code */}
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <FileCode size={16} className="text-gray-400" />
+                                            <label className="block text-sm font-bold text-gray-700">Template Code (C Programming)</label>
+                                        </div>
+                                        <textarea
+                                            rows="8"
+                                            value={q.templateCode}
+                                            onChange={(e) => updateQuestion(qIdx, 'templateCode', e.target.value)}
+                                            className="w-full p-4 bg-gray-900 text-gray-100 font-mono text-sm rounded-xl outline-none focus:ring-2 focus:ring-purple-500"
+                                            spellCheck="false"
                                         />
                                     </div>
-                                ))}
-                            </div>
+
+                                    {/* Test Cases */}
+                                    <div className="space-y-4">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <div className="flex items-center gap-2">
+                                                <Terminal size={16} className="text-gray-400" />
+                                                <label className="block text-sm font-bold text-gray-700">Test Cases</label>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => addTestCase(qIdx)}
+                                                className="text-xs font-bold text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                                            >
+                                                <Plus size={14} /> Add Test Case
+                                            </button>
+                                        </div>
+                                        
+                                        <div className="space-y-3">
+                                            {q.testCases.map((tc, tIdx) => (
+                                                <div key={tIdx} className="p-4 bg-gray-50 rounded-xl border border-gray-100 space-y-3 relative group/tc">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => removeTestCase(qIdx, tIdx)}
+                                                        className="absolute top-2 right-2 p-1 text-gray-400 hover:text-red-500 opacity-0 group-hover/tc:opacity-100 transition-opacity"
+                                                    >
+                                                        <Trash2 size={14} />
+                                                    </button>
+                                                    
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <div>
+                                                            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Input</label>
+                                                            <textarea
+                                                                rows="2"
+                                                                value={tc.input}
+                                                                onChange={(e) => updateTestCase(qIdx, tIdx, 'input', e.target.value)}
+                                                                className="w-full p-2 text-xs border border-gray-200 rounded-lg outline-none font-mono"
+                                                                placeholder="e.g. 5"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1">Expected Output</label>
+                                                            <textarea
+                                                                rows="2"
+                                                                value={tc.expectedOutput}
+                                                                onChange={(e) => updateTestCase(qIdx, tIdx, 'expectedOutput', e.target.value)}
+                                                                className="w-full p-2 text-xs border border-gray-200 rounded-lg outline-none font-mono"
+                                                                placeholder="e.g. 120"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div className="flex items-center gap-2">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => updateTestCase(qIdx, tIdx, 'isPublic', !tc.isPublic)}
+                                                            className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold transition-all ${tc.isPublic ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-600'}`}
+                                                        >
+                                                            {tc.isPublic ? <Eye size={12} /> : <EyeOff size={12} />}
+                                                            {tc.isPublic ? 'PUBLIC TEST CASE' : 'HIDDEN TEST CASE'}
+                                                        </button>
+                                                        <span className="text-[10px] text-gray-400 italic">
+                                                            {tc.isPublic ? 'Visible to student during exam' : 'Hidden from student, used for final evaluation'}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="mt-4 flex gap-4">
                                 <div className="flex-1">

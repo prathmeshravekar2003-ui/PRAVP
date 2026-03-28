@@ -8,8 +8,8 @@ public class SaveAnswerRequest {
     private String studentExamId;
     @NotBlank
     private String questionId;
-    @NotNull
     private Integer selectedOptionIndex;
+    private String codeAnswer;
 
     public SaveAnswerRequest() {
     }
@@ -36,5 +36,13 @@ public class SaveAnswerRequest {
 
     public void setSelectedOptionIndex(Integer selectedOptionIndex) {
         this.selectedOptionIndex = selectedOptionIndex;
+    }
+
+    public String getCodeAnswer() {
+        return codeAnswer;
+    }
+
+    public void setCodeAnswer(String codeAnswer) {
+        this.codeAnswer = codeAnswer;
     }
 }

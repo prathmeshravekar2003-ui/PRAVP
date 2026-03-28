@@ -13,8 +13,11 @@ public class QuestionResponse {
     private List<String> options;
     private Integer correctAnswer;
     private Integer marks;
-    private DifficultyLevel difficultyLevel;
+    private com.pravp.backend.model.DifficultyLevel difficultyLevel;
     private LocalDateTime createdAt;
+    private com.pravp.backend.model.QuestionType type;
+    private String templateCode;
+    private List<com.pravp.backend.model.Question.TestCase> testCases;
 
     public QuestionResponse() {
     }
@@ -81,5 +84,29 @@ public class QuestionResponse {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public com.pravp.backend.model.QuestionType getType() {
+        return type;
+    }
+
+    public void setType(com.pravp.backend.model.QuestionType type) {
+        this.type = type;
+    }
+
+    public String getTemplateCode() {
+        return templateCode;
+    }
+
+    public void setTemplateCode(String templateCode) {
+        this.templateCode = templateCode;
+    }
+
+    public List<com.pravp.backend.model.Question.TestCase> getTestCases() {
+        return testCases;
+    }
+
+    public void setTestCases(List<com.pravp.backend.model.Question.TestCase> testCases) {
+        this.testCases = testCases;
     }
 }

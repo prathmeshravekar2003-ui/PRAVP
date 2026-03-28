@@ -23,17 +23,20 @@ public class EvaluationService {
     private final ResultRepository resultRepository;
     private final ExamRepository examRepository;
     private final StudentExamRepository studentExamRepository;
+    private final CExecutionService cExecutionService;
 
     public EvaluationService(QuestionRepository questionRepository,
             StudentAnswerRepository studentAnswerRepository,
             ResultRepository resultRepository,
             ExamRepository examRepository,
-            StudentExamRepository studentExamRepository) {
+            StudentExamRepository studentExamRepository,
+            CExecutionService cExecutionService) {
         this.questionRepository = questionRepository;
         this.studentAnswerRepository = studentAnswerRepository;
         this.resultRepository = resultRepository;
         this.examRepository = examRepository;
         this.studentExamRepository = studentExamRepository;
+        this.cExecutionService = cExecutionService;
     }
 
     public synchronized Result evaluateExam(StudentExam studentExam) {
@@ -55,7 +58,15 @@ public class EvaluationService {
         for (StudentAnswer answer : answers) {
             Question question = questionMap.get(answer.getQuestionId());
             if (question != null) {
-                boolean isCorrect = question.getCorrectAnswer().equals(answer.getSelectedOptionIndex());
+                boolean isCorrect = false;
+                if (question.getType() == QuestionType.CODE) {
+                    isCorrect = evaluateCodeQuestion(question, answer.getCodeAnswer());
+                } else {
+                    // Default to MCQ
+                    isCorrect = question.getCorrectAnswer() != null && 
+                                question.getCorrectAnswer().equals(answer.getSelectedOptionIndex());
+                }
+                
                 answer.setIsCorrect(isCorrect);
                 studentAnswerRepository.save(answer);
 
@@ -140,7 +151,9 @@ public class EvaluationService {
                     selectedIndex,
                     q.getCorrectAnswer(),
                     isCorrect,
-                    q.getMarks()));
+                    q.getMarks(),
+                    q.getType(),
+                    (sa != null) ? sa.getCodeAnswer() : null));
 
             totalPossibleMarks += q.getMarks();
             if (isCorrect != null && isCorrect) {
@@ -153,5 +166,26 @@ public class EvaluationService {
 
     public void deleteResultByStudentExamId(String studentExamId) {
         resultRepository.deleteByStudentExamId(studentExamId);
+    }
+
+    private boolean evaluateCodeQuestion(Question question, String code) {
+        if (code == null || code.isEmpty() || question.getTestCases() == null) {
+            return false;
+        }
+
+        try {
+            for (Question.TestCase testCase : question.getTestCases()) {
+                String actualOutput = cExecutionService.runCCode(code, testCase.getInput());
+                String expectedOutput = testCase.getExpectedOutput() != null ? testCase.getExpectedOutput().trim() : "";
+                
+                if (!expectedOutput.equals(actualOutput.trim())) {
+                    return false; // Failed one test case
+                }
+            }
+            return true; // All test cases passed
+        } catch (Exception e) {
+            logger.error("Error evaluating code question: {}", e.getMessage());
+            return false;
+        }
     }
 }

@@ -9,16 +9,20 @@ public class QuestionResultDTO {
     private Integer correctOptionIndex;
     private Boolean isCorrect;
     private Integer marks;
+    private com.pravp.backend.model.QuestionType type;
+    private String codeAnswer;
 
     public QuestionResultDTO() {}
 
-    public QuestionResultDTO(String questionText, List<String> options, Integer selectedOptionIndex, Integer correctOptionIndex, Boolean isCorrect, Integer marks) {
+    public QuestionResultDTO(String questionText, List<String> options, Integer selectedOptionIndex, Integer correctOptionIndex, Boolean isCorrect, Integer marks, com.pravp.backend.model.QuestionType type, String codeAnswer) {
         this.questionText = questionText;
         this.options = options;
         this.selectedOptionIndex = selectedOptionIndex;
         this.correctOptionIndex = correctOptionIndex;
         this.isCorrect = isCorrect;
         this.marks = marks;
+        this.type = type;
+        this.codeAnswer = codeAnswer;
     }
 
     public String getQuestionText() {
@@ -67,5 +71,21 @@ public class QuestionResultDTO {
 
     public void setMarks(Integer marks) {
         this.marks = marks;
+    }
+
+    public com.pravp.backend.model.QuestionType getType() {
+        return type;
+    }
+
+    public void setType(com.pravp.backend.model.QuestionType type) {
+        this.type = type;
+    }
+
+    public String getCodeAnswer() {
+        return codeAnswer;
+    }
+
+    public void setCodeAnswer(String codeAnswer) {
+        this.codeAnswer = codeAnswer;
     }
 }

@@ -208,32 +208,49 @@ const ResultPage = () => {
                                             </span>
                                         </div>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ml-12">
-                                            {q.options.map((opt, oIdx) => {
-                                                const isSelected = q.selectedOptionIndex === oIdx;
-                                                const isCorrect = q.correctOptionIndex === oIdx;
+                                        <div className="ml-12">
+                                            {q.type === 'CODE' ? (
+                                                <div className="space-y-4">
+                                                    <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Submitted Code</div>
+                                                    <pre className="p-4 bg-gray-900 text-gray-100 text-xs rounded-xl font-mono overflow-x-auto border border-gray-800 shadow-inner">
+                                                        {q.codeAnswer || '// No code submitted'}
+                                                    </pre>
+                                                    {!q.isCorrect && (
+                                                        <p className="text-sm text-red-600 font-medium italic">
+                                                            One or more test cases failed.
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    {q.options?.map((opt, oIdx) => {
+                                                        const isSelected = q.selectedOptionIndex === oIdx;
+                                                        const isCorrect = q.correctOptionIndex === oIdx;
 
-                                                let stateClass = "bg-white border-gray-200 text-gray-700";
-                                                if (isCorrect) stateClass = "bg-green-100 border-green-300 text-green-800 font-bold";
-                                                else if (isSelected && !isCorrect) stateClass = "bg-red-100 border-red-300 text-red-800 font-bold";
+                                                        let stateClass = "bg-white border-gray-200 text-gray-700";
+                                                        if (isCorrect) stateClass = "bg-green-100 border-green-300 text-green-800 font-bold";
+                                                        else if (isSelected && !isCorrect) stateClass = "bg-red-100 border-red-300 text-red-800 font-bold";
 
-                                                return (
-                                                    <div
-                                                        key={oIdx}
-                                                        className={`p-3 rounded-xl border flex items-center justify-between gap-3 ${stateClass}`}
-                                                    >
-                                                        <span className="flex-1">{opt}</span>
-                                                        {isCorrect && <Check size={16} className="text-green-600" />}
-                                                        {isSelected && !isCorrect && <X size={16} className="text-red-600" />}
-                                                    </div>
-                                                );
-                                            })}
+                                                        return (
+                                                            <div
+                                                                key={oIdx}
+                                                                className={`p-3 rounded-xl border flex items-center justify-between gap-3 ${stateClass}`}
+                                                            >
+                                                                <span className="flex-1 text-sm">{opt}</span>
+                                                                {isCorrect && <Check size={16} className="text-green-600" />}
+                                                                {isSelected && !isCorrect && <X size={16} className="text-red-600" />}
+                                                            </div>
+                                                        );
+                                                    })}
+                                                </div>
+                                            )}
+
+                                            {((q.type !== 'CODE' && q.selectedOptionIndex === null) || (q.type === 'CODE' && !q.codeAnswer)) && (
+                                                <p className="mt-3 text-sm text-amber-600 font-medium italic">
+                                                    You did not answer this question.
+                                                </p>
+                                            )}
                                         </div>
-                                        {q.selectedOptionIndex === null && (
-                                            <p className="ml-12 mt-3 text-sm text-amber-600 font-medium italic">
-                                                You did not answer this question.
-                                            </p>
-                                        )}
                                     </div>
                                 ))}
                             </div>

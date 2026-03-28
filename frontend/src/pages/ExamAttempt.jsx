@@ -167,16 +167,25 @@ const ExamAttempt = () => {
         setShowSecurityOverlay(false);
     };
 
-    const handleSelectOption = async (optionIndex) => {
-        const questionId = questions[currentIndex].id;
-        setAnswers({ ...answers, [questionId]: optionIndex });
+    const handleSaveAnswer = async (value) => {
+        const question = questions[currentIndex];
+        const questionId = question.id;
+        
+        setAnswers(prev => ({ ...prev, [questionId]: value }));
 
         try {
-            await api.post('/exam/save-answer', {
+            const payload = {
                 studentExamId: examSession.studentExamId,
-                questionId: questionId,
-                selectedOptionIndex: optionIndex
-            });
+                questionId: questionId
+            };
+
+            if (question.type === 'CODE') {
+                payload.codeAnswer = value;
+            } else {
+                payload.selectedOptionIndex = value;
+            }
+
+            await api.post('/exam/save-answer', payload);
         } catch (err) {
             console.error('Failed to auto-save answer', err);
         }
@@ -260,8 +269,8 @@ const ExamAttempt = () => {
                     {questions.length > 0 && (
                         <QuestionCard
                             question={questions[currentIndex]}
-                            selectedOption={answers[questions[currentIndex].id]}
-                            onSelect={handleSelectOption}
+                            answer={answers[questions[currentIndex].id]}
+                            onAnswer={handleSaveAnswer}
                         />
                     )}
 

@@ -15,10 +15,7 @@ public class QuestionRequest {
     @NotBlank(message = "Question text is required")
     private String questionText;
 
-    @NotEmpty(message = "Options cannot be empty")
     private List<String> options;
-
-    @NotNull(message = "Correct answer index is required")
     private Integer correctAnswer;
 
     @NotNull(message = "Marks are required")
@@ -26,6 +23,9 @@ public class QuestionRequest {
     private Integer marks;
 
     private DifficultyLevel difficultyLevel;
+    private com.pravp.backend.model.QuestionType type;
+    private String templateCode;
+    private List<com.pravp.backend.model.Question.TestCase> testCases;
 
     public QuestionRequest() {
     }
@@ -76,5 +76,29 @@ public class QuestionRequest {
 
     public void setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
+    }
+
+    public com.pravp.backend.model.QuestionType getType() {
+        return type;
+    }
+
+    public void setType(com.pravp.backend.model.QuestionType type) {
+        this.type = type;
+    }
+
+    public String getTemplateCode() {
+        return templateCode;
+    }
+
+    public void setTemplateCode(String templateCode) {
+        this.templateCode = templateCode;
+    }
+
+    public List<com.pravp.backend.model.Question.TestCase> getTestCases() {
+        return testCases;
+    }
+
+    public void setTestCases(List<com.pravp.backend.model.Question.TestCase> testCases) {
+        this.testCases = testCases;
     }
 }
