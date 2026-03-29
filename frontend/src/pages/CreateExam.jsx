@@ -118,12 +118,28 @@ const CreateExam = () => {
 
             if (response.data && response.data.length > 0) {
                 // Map back correctOptionIndex to correctAnswer if needed (the model uses correctOptionIndex)
+                // Also ensure all required fields have safe defaults so the form never crashes
                 const parsedQuestions = response.data.map(q => ({
+                    questionText: '',
+                    type: 'MCQ',
+                    options: ['', '', '', ''],
+                    correctAnswer: 0,
+                    marks: 5,
+                    difficultyLevel: 'MEDIUM',
+                    templateCode: '#include <stdio.h>\n\nint main() {\n    // Write your code here\n    return 0;\n}',
+                    testCases: [{ input: '', expectedOutput: '', isPublic: true }],
                     ...q,
-                    correctAnswer: q.correctOptionIndex !== undefined ? q.correctOptionIndex : 0
+                    // Ensure options is always an array of at least 4 entries
+                    options: Array.isArray(q.options) && q.options.length >= 2
+                        ? q.options
+                        : ['', '', '', ''],
+                    // Ensure testCases is always an array
+                    testCases: Array.isArray(q.testCases) && q.testCases.length > 0
+                        ? q.testCases
+                        : [{ input: '', expectedOutput: '', isPublic: true }],
+                    correctAnswer: q.correctOptionIndex !== undefined ? q.correctOptionIndex
+                        : (q.correctAnswer !== undefined ? q.correctAnswer : 0),
                 }));
-
-                setQuestions(parsedQuestions);
 
                 setQuestions(parsedQuestions);
                 alert(`Successfully parsed ${parsedQuestions.length} questions!`);
