@@ -29,7 +29,7 @@ const ExamAttempt = () => {
     useEffect(() => {
         if (startAttemptRef.current) return;
         startAttemptRef.current = true;
-        
+
         const startExam = async () => {
             try {
                 const sessionRes = await api.post(`/exam/start/${examId}`);
@@ -171,7 +171,7 @@ const ExamAttempt = () => {
     const handleSaveAnswer = async (value) => {
         const question = questions[currentIndex];
         const questionId = question.id;
-        
+
         setAnswers(prev => ({ ...prev, [questionId]: value }));
 
         const doSave = async () => {
@@ -270,7 +270,7 @@ const ExamAttempt = () => {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border ${securityChances <= 1 ? 'bg-red-100 text-red-800 border-red-200' : 'bg-gray-100 text-gray-800 border-gray-200'
+                        {/*<div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold border ${securityChances <= 1 ? 'bg-red-100 text-red-800 border-red-200' : 'bg-gray-100 text-gray-800 border-gray-200'
                             }`}>
                             <span>Security Chances: {securityChances}</span>
                         </div>
@@ -279,7 +279,7 @@ const ExamAttempt = () => {
                                 <AlertCircle size={16} />
                                 <span>Alerts ({warnings})</span>
                             </div>
-                        )}
+                        )} */}
                         <button
                             onClick={() => handleSubmit(false)}
                             disabled={loading}
@@ -391,9 +391,9 @@ const ExamAttempt = () => {
                             {violationType === 'FORBIDDEN_KEY' && (
                                 <p>This keyboard shortcut is disabled for security reasons.</p>
                             )}
-                            <div className="mt-4 font-bold text-red-600 p-3 bg-red-50 rounded-xl inline-block">
+                            {/* <div className="mt-4 font-bold text-red-600 p-3 bg-red-50 rounded-xl inline-block">
                                 Remaining Chances: {securityChances}
-                            </div>
+                            </div> */}
                         </div>
 
                         <button
