@@ -1,26 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, User, Loader2, ArrowRight, ShieldCheck, GraduationCap } from 'lucide-react';
+import api from '../services/api';
 
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
-        role: 'STUDENT'
+        role: 'STUDENT',
+        rollNo: '',
+        batchId: ''
     });
+    const [batches, setBatches] = useState([]);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const { register } = useAuth();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const fetchBatches = async () => {
+            try {
+                const response = await api.get('/batches/public');
+                if (response.success) {
+                    setBatches(response.data);
+                }
+            } catch (err) {
+                console.error('Failed to fetch batches', err);
+            }
+        };
+        fetchBatches();
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
+        
+        // Prepare submission data
+        const submissionData = { ...formData };
+        if (!submissionData.batchId || submissionData.batchId === 'not defined') {
+            submissionData.batchId = null;
+        }
+
         try {
-            await register(formData);
+            await register(submissionData);
             navigate('/login');
         } catch (err) {
             setError(err.response?.data?.message || 'Registration failed. Please try again.');
@@ -101,10 +126,48 @@ const Register = () => {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-black text-slate-700 mb-1.5 ml-1">Identify As</label>
+                            <label className="block text-sm font-black text-slate-700 mb-1.5 ml-1">Roll Number</label>
+                            <div className="relative group">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                                    <ShieldCheck size={20} />
+                                </div>
+                                <input
+                                    type="text"
+                                    required
+                                    value={formData.rollNo}
+                                    onChange={(e) => setFormData({ ...formData, rollNo: e.target.value })}
+                                    className="block w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white transition-all font-medium text-slate-900 shadow-inner"
+                                    placeholder="21BCS123"
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-black text-slate-700 mb-1.5 ml-1">Batch</label>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
                                     <GraduationCap size={20} />
+                                </div>
+                                <select
+                                    value={formData.batchId}
+                                    onChange={(e) => setFormData({ ...formData, batchId: e.target.value })}
+                                    className="block w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white transition-all font-bold text-slate-900 shadow-inner appearance-none cursor-pointer"
+                                >
+                                    <option value="not defined">Not Defined</option>
+                                    {batches.map((batch) => (
+                                        <option key={batch.id} value={batch.id}>
+                                            {batch.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-black text-slate-700 mb-1.5 ml-1">Identify As</label>
+                            <div className="relative group">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-500 transition-colors">
+                                    <User size={20} />
                                 </div>
                                 <select
                                     value={formData.role}
@@ -112,7 +175,6 @@ const Register = () => {
                                     className="block w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 focus:bg-white transition-all font-bold text-slate-900 shadow-inner appearance-none cursor-pointer"
                                 >
                                     <option value="STUDENT">Student</option>
-                                    {/* <option value="INSTRUCTOR">Instructor/Faculty</option> */}
                                 </select>
                             </div>
                         </div>

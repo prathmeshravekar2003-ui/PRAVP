@@ -138,6 +138,9 @@ public class ExamService {
         if (request.getStudentEmails() != null) {
             exam.setStudentEmails(request.getStudentEmails());
         }
+        if (request.getQuestionsPerStudent() != null) {
+            exam.setQuestionsPerStudent(request.getQuestionsPerStudent());
+        }
     }
 
     private ExamResponse mapModelToResponse(Exam exam) {
@@ -156,6 +159,7 @@ public class ExamService {
         response.setAntiCheatConfig(exam.getAntiCheatConfig());
         response.setBatchIds(exam.getBatchIds());
         response.setStudentEmails(exam.getStudentEmails());
+        response.setQuestionsPerStudent(exam.getQuestionsPerStudent());
         return response;
     }
 }

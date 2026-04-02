@@ -23,6 +23,7 @@ public class User implements UserDetails {
     private boolean enabled = true;
     private String batchId;
     private String batchName;
+    private String rollNo;
 
     public User() {
     }
@@ -133,5 +134,13 @@ public class User implements UserDetails {
 
     public void setBatchName(String batchName) {
         this.batchName = batchName;
+    }
+
+    public String getRollNo() {
+        return rollNo;
+    }
+
+    public void setRollNo(String rollNo) {
+        this.rollNo = rollNo;
     }
 }

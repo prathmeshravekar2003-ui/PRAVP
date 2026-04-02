@@ -3,6 +3,8 @@ package com.pravp.backend.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.Instant;
+import java.util.List;
+import java.util.ArrayList;
 
 @Document(collection = "student_exams")
 public class StudentExam {
@@ -14,6 +16,7 @@ public class StudentExam {
     private Instant endTime;
     private String status; // STARTED, SUBMITTED, AUTO_SUBMITTED
     private Boolean isSuspicious = false;
+    private List<String> questionIds = new ArrayList<>();
 
     public StudentExam() {
     }
@@ -70,5 +73,13 @@ public class StudentExam {
 
     public void setIsSuspicious(Boolean isSuspicious) {
         this.isSuspicious = isSuspicious;
+    }
+
+    public List<String> getQuestionIds() {
+        return questionIds;
+    }
+
+    public void setQuestionIds(List<String> questionIds) {
+        this.questionIds = questionIds;
     }
 }

@@ -22,6 +22,7 @@ public class ExamResponse {
     private Exam.AntiCheatConfig antiCheatConfig;
     private List<String> batchIds;
     private List<String> studentEmails;
+    private Integer questionsPerStudent;
 
     public ExamResponse() {
     }
@@ -136,5 +137,13 @@ public class ExamResponse {
 
     public void setStudentEmails(List<String> studentEmails) {
         this.studentEmails = studentEmails;
+    }
+
+    public Integer getQuestionsPerStudent() {
+        return questionsPerStudent;
+    }
+
+    public void setQuestionsPerStudent(Integer questionsPerStudent) {
+        this.questionsPerStudent = questionsPerStudent;
     }
 }

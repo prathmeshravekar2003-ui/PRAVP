@@ -16,8 +16,11 @@ const CreateExam = () => {
         totalMarks: 0,
         status: 'DRAFT',
         batchIds: [],
-        studentEmails: []
+        studentEmails: [],
+        questionsPerStudent: 0
     });
+    
+    const [isRandomized, setIsRandomized] = useState(false);
     
     const [availableBatches, setAvailableBatches] = useState([]);
     const [studentsByBatch, setStudentsByBatch] = useState({}); // { batchId: [students] }
@@ -42,9 +45,17 @@ const CreateExam = () => {
     }, []);
 
     useEffect(() => {
-        const total = questions.reduce((sum, q) => sum + (q.marks || 0), 0);
+        let total = 0;
+        if (isRandomized && examData.questionsPerStudent > 0) {
+            // For randomized exams, total marks is (questions per student) * (marks per question)
+            // We assume all questions have the same marks for fairness
+            const baseMarks = questions.length > 0 ? (questions[0].marks || 0) : 0;
+            total = examData.questionsPerStudent * baseMarks;
+        } else {
+            total = questions.reduce((sum, q) => sum + (q.marks || 0), 0);
+        }
         setExamData(prev => ({ ...prev, totalMarks: total }));
-    }, [questions]);
+    }, [questions, isRandomized, examData.questionsPerStudent]);
 
     const fetchBatches = async () => {
         setFetchingBatches(true);
@@ -307,6 +318,49 @@ const CreateExam = () => {
                             className="w-full p-3 border border-gray-200 rounded-xl outline-none"
                         />
                     </div>
+
+                    <div className="md:col-span-2 pt-4 border-t border-gray-50">
+                        <div className="flex items-center justify-between p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                            <div>
+                                <h4 className="text-sm font-bold text-blue-900">Randomize Questions per Student</h4>
+                                <p className="text-xs text-blue-700">Each student will get a random subset of questions from the pool.</p>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setIsRandomized(!isRandomized);
+                                    if (isRandomized) setExamData({ ...examData, questionsPerStudent: 0 });
+                                }}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${isRandomized ? 'bg-blue-600' : 'bg-gray-200'}`}
+                            >
+                                <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${isRandomized ? 'translate-x-6' : 'translate-x-1'}`} />
+                            </button>
+                        </div>
+                    </div>
+
+                    {isRandomized && (
+                        <div className="md:col-span-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                            <label className="block text-sm font-bold text-gray-700 mb-2">Number of Questions per Student</label>
+                            <div className="relative">
+                                <CheckSquare className="absolute left-3 top-3 text-gray-400" size={18} />
+                                <input
+                                    type="number"
+                                    required={isRandomized}
+                                    min="1"
+                                    max={questions.length}
+                                    value={examData.questionsPerStudent}
+                                    onChange={(e) => setExamData({ ...examData, questionsPerStudent: parseInt(e.target.value) || 0 })}
+                                    className="w-full pl-10 p-3 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder={`e.g. 25 (Pool has ${questions.length} total)`}
+                                />
+                                {examData.questionsPerStudent > questions.length && (
+                                    <p className="mt-2 text-xs text-red-500 flex items-center gap-1">
+                                        <AlertCircle size={12} /> Cannot exceed total questions ({questions.length})
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Batch and Student Selection */}

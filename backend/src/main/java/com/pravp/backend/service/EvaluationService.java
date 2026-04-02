@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,14 +47,29 @@ public class EvaluationService {
             return existingResult.get();
         }
 
-        List<Question> questions = questionRepository.findByExamId(studentExam.getExamId());
+        List<Question> questions;
+        List<String> assignedIds = studentExam.getQuestionIds();
+        
+        if (assignedIds != null && !assignedIds.isEmpty()) {
+            // Fetch only assigned questions
+            Map<String, Question> qMap = questionRepository.findAllById(assignedIds).stream()
+                    .collect(Collectors.toMap(Question::getId, q -> q));
+            questions = assignedIds.stream()
+                    .map(qMap::get)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        } else {
+            // Fallback for older exams
+            questions = questionRepository.findByExamId(studentExam.getExamId());
+        }
+        
         List<StudentAnswer> answers = studentAnswerRepository.findByStudentExamId(studentExam.getId());
 
         Map<String, Question> questionMap = questions.stream()
                 .collect(Collectors.toMap(Question::getId, q -> q));
 
+        int totalPossibleMarks = questions.stream().mapToInt(q -> q.getMarks() != null ? q.getMarks() : 0).sum();
         int totalScore = 0;
-        int totalPossibleMarks = questions.stream().mapToInt(Question::getMarks).sum();
 
         for (StudentAnswer answer : answers) {
             Question question = questionMap.get(answer.getQuestionId());
@@ -126,7 +142,21 @@ public class EvaluationService {
                     studentExam.getStatus());
         }
 
-        List<Question> questions = questionRepository.findByExamId(examId);
+        List<String> assignedIds = studentExam.getQuestionIds();
+        List<Question> questions;
+        
+        if (assignedIds != null && !assignedIds.isEmpty()) {
+            // Fetch assigned questions in order
+            Map<String, Question> qMap = questionRepository.findAllById(assignedIds).stream()
+                    .collect(Collectors.toMap(Question::getId, q -> q));
+            questions = assignedIds.stream()
+                    .map(qMap::get)
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        } else {
+            questions = questionRepository.findByExamId(examId);
+        }
+        
         List<StudentAnswer> answers = studentAnswerRepository.findByStudentExamId(studentExam.getId());
 
         logger.info("Found {} questions and {} answers for attempt {}", questions.size(), answers.size(),

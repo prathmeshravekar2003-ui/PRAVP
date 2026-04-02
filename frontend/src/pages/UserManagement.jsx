@@ -7,25 +7,54 @@ const UserManagement = () => {
     const { user: currentUser } = useAuth();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [updating, setUpdating] = useState(null);
+    const [page, setPage] = useState(0);
+    const [hasMore, setHasMore] = useState(false);
+    const [totalElements, setTotalElements] = useState(0);
+    const pageSize = 10;
 
-    const fetchUsers = async () => {
+    const fetchUsers = async (pageToFetch = 0, isLoadingMore = false) => {
+        if (!isLoadingMore) setLoading(true);
+        else setLoadingMore(true);
+
         try {
             const response = await api.get('/users', {
-                params: { name: searchTerm }
+                params: { 
+                    name: searchTerm,
+                    page: pageToFetch,
+                    size: pageSize
+                }
             });
-            setUsers(response.data.content);
+            
+            const data = response.data;
+            if (pageToFetch === 0) {
+                setUsers(data.content);
+            } else {
+                setUsers(prev => [...prev, ...data.content]);
+            }
+            
+            setTotalElements(data.totalElements);
+            setHasMore(!data.last);
+            setPage(pageToFetch);
         } catch (err) {
             console.error('Failed to fetch users', err);
         } finally {
             setLoading(false);
+            setLoadingMore(false);
         }
     };
 
     useEffect(() => {
-        fetchUsers();
+        fetchUsers(0);
     }, [searchTerm]);
+
+    const handleLoadMore = () => {
+        if (hasMore && !loadingMore) {
+            fetchUsers(page + 1, true);
+        }
+    };
 
     const handleDelete = async (userId) => {
         if (!window.confirm('Are you sure you want to delete this user?')) return;
@@ -79,7 +108,7 @@ const UserManagement = () => {
                         />
                     </div>
                     <div className="text-sm font-medium text-gray-500">
-                        Total Results: {users.length}
+                        Showing {users.length} of {totalElements} users
                     </div>
                 </div>
 
@@ -150,6 +179,25 @@ const UserManagement = () => {
                         </tbody>
                     </table>
                 </div>
+
+                {hasMore && (
+                    <div className="p-6 border-t border-gray-100 flex justify-center">
+                        <button
+                            onClick={handleLoadMore}
+                            disabled={loadingMore}
+                            className="flex items-center gap-2 px-6 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+                        >
+                            {loadingMore ? (
+                                <>
+                                    <Loader2 className="animate-spin" size={18} />
+                                    Loading...
+                                </>
+                            ) : (
+                                'View More Users'
+                            )}
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

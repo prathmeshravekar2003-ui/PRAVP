@@ -44,6 +44,12 @@ public class BatchController {
         return ResponseEntity.ok(ApiResponse.success(batchService.getAllBatches(), "Batches fetched successfully"));
     }
 
+    @GetMapping("/public")
+    @Operation(summary = "Get all batches for registration (public)")
+    public ResponseEntity<ApiResponse<List<BatchResponse>>> getPublicBatches() {
+        return ResponseEntity.ok(ApiResponse.success(batchService.getAllBatches(), "Batches fetched successfully"));
+    }
+
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN', 'INSTRUCTOR')")
     @Operation(summary = "Get batch details")

@@ -3,7 +3,11 @@ package com.pravp.backend.service;
 import com.pravp.backend.dto.QuestionRequest;
 import com.pravp.backend.dto.QuestionResponse;
 import com.pravp.backend.model.Question;
+import com.pravp.backend.model.Exam;
+import com.pravp.backend.model.StudentExam;
 import com.pravp.backend.repository.QuestionRepository;
+import com.pravp.backend.repository.ExamRepository;
+import com.pravp.backend.repository.StudentExamRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,9 +21,13 @@ import java.util.stream.Collectors;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+    private final ExamRepository examRepository;
+    private final StudentExamRepository studentExamRepository;
 
-    public QuestionService(QuestionRepository questionRepository) {
+    public QuestionService(QuestionRepository questionRepository, ExamRepository examRepository, StudentExamRepository studentExamRepository) {
         this.questionRepository = questionRepository;
+        this.examRepository = examRepository;
+        this.studentExamRepository = studentExamRepository;
     }
 
     public QuestionResponse addQuestion(QuestionRequest request) {
@@ -56,7 +64,31 @@ public class QuestionService {
     public List<QuestionResponse> getRandomizedQuestions(String examId) {
         List<Question> questions = questionRepository.findByExamId(examId);
         Collections.shuffle(questions);
+        
+        // Check if there is a limit on questions per student
+        Integer limit = examRepository.findById(examId)
+                .map(Exam::getQuestionsPerStudent)
+                .orElse(0);
+        
+        if (limit != null && limit > 0 && limit < questions.size()) {
+            questions = questions.subList(0, limit);
+        }
+        
         return questions.stream()
+                .map(this::mapModelToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public List<QuestionResponse> getQuestionsForAttempt(String studentExamId) {
+        StudentExam studentExam = studentExamRepository.findById(studentExamId)
+                .orElseThrow(() -> new RuntimeException("Student exam session not found"));
+        
+        List<String> questionIds = studentExam.getQuestionIds();
+        
+        // Fetch questions maintaining the order stored in StudentExam
+        return questionIds.stream()
+                .map(id -> questionRepository.findById(id).orElse(null))
+                .filter(Objects::nonNull)
                 .map(this::mapModelToResponse)
                 .collect(Collectors.toList());
     }

@@ -46,7 +46,7 @@ public class SecurityConfig {
                                                 .contentSecurityPolicy(
                                                                 csp -> csp.policyDirectives("default-src 'self'")))
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**")
+                                                .requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/batches/public", "/batches/public/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated())
                                 .sessionManagement(session -> session

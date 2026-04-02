@@ -36,7 +36,7 @@ const ExamAttempt = () => {
                 const sessionData = sessionRes.data;
                 setExamSession(sessionData);
 
-                const questionsRes = await api.get(`/exam/${examId}/questions`);
+                const questionsRes = await api.get(`/exam/attempt/${sessionData.studentExamId}/questions`);
                 setQuestions(questionsRes.data);
 
                 // Calculate initial time left

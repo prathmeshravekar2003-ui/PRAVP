@@ -27,6 +27,7 @@ public class Exam {
     // Non-empty = only students in matching batches can see this exam
     private List<String> batchIds = new ArrayList<>();
     private List<String> studentEmails = new ArrayList<>();
+    private Integer questionsPerStudent = 0; // 0 or null means all questions
 
     public Exam() {
     }
@@ -257,5 +258,13 @@ public class Exam {
 
     public void setStudentEmails(List<String> studentEmails) {
         this.studentEmails = studentEmails;
+    }
+
+    public Integer getQuestionsPerStudent() {
+        return questionsPerStudent;
+    }
+
+    public void setQuestionsPerStudent(Integer questionsPerStudent) {
+        this.questionsPerStudent = questionsPerStudent;
     }
 }

@@ -22,6 +22,9 @@ public class RegisterRequest {
     @NotNull(message = "Role is required")
     private Role role;
 
+    private String rollNo;
+    private String batchId;
+
     public RegisterRequest() {
     }
 
@@ -55,5 +58,21 @@ public class RegisterRequest {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getRollNo() {
+        return rollNo;
+    }
+
+    public void setRollNo(String rollNo) {
+        this.rollNo = rollNo;
+    }
+
+    public String getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(String batchId) {
+        this.batchId = batchId;
     }
 }

@@ -21,16 +21,19 @@ public class AuthService {
         private final AuthenticationManager authenticationManager;
         private final PasswordEncoder passwordEncoder;
         private final UserDetailsService userDetailsService;
+        private final BatchService batchService;
 
         public AuthService(UserRepository userRepository, JwtUtil jwtUtil,
                         AuthenticationManager authenticationManager,
                         PasswordEncoder passwordEncoder,
-                        UserDetailsService userDetailsService) {
+                        UserDetailsService userDetailsService,
+                        BatchService batchService) {
                 this.userRepository = userRepository;
                 this.jwtUtil = jwtUtil;
                 this.authenticationManager = authenticationManager;
                 this.passwordEncoder = passwordEncoder;
                 this.userDetailsService = userDetailsService;
+                this.batchService = batchService;
         }
 
         public AuthResponse register(RegisterRequest request) {
@@ -43,8 +46,20 @@ public class AuthService {
                 user.setEmail(request.getEmail());
                 user.setPassword(passwordEncoder.encode(request.getPassword()));
                 user.setRole(request.getRole());
-
+                user.setRollNo(request.getRollNo());
+                
+                // Save user first
                 userRepository.save(user);
+
+                // Then handle batch assignment
+                if (request.getBatchId() != null && !request.getBatchId().isEmpty() && !request.getBatchId().equals("not defined")) {
+                    try {
+                        batchService.addStudent(request.getBatchId(), request.getEmail());
+                    } catch (Exception e) {
+                        // Log error but don't fail registration if batch assignment fails
+                        // Alternatively, you could choose to throw an exception here
+                    }
+                }
 
                 var accessToken = jwtUtil.generateToken(user);
                 var refreshToken = jwtUtil.generateRefreshToken(user);

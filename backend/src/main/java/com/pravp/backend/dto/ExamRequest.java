@@ -38,6 +38,7 @@ public class ExamRequest {
 
     private List<String> batchIds;
     private List<String> studentEmails;
+    private Integer questionsPerStudent;
 
     public ExamRequest() {
     }
@@ -128,5 +129,13 @@ public class ExamRequest {
 
     public void setStudentEmails(List<String> studentEmails) {
         this.studentEmails = studentEmails;
+    }
+
+    public Integer getQuestionsPerStudent() {
+        return questionsPerStudent;
+    }
+
+    public void setQuestionsPerStudent(Integer questionsPerStudent) {
+        this.questionsPerStudent = questionsPerStudent;
     }
 }

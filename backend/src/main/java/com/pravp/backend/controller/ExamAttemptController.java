@@ -40,10 +40,18 @@ public class ExamAttemptController {
 
     @GetMapping("/{examId}/questions")
     @PreAuthorize("hasRole('STUDENT')")
-    @Operation(summary = "Get randomized questions for the exam session")
+    @Operation(summary = "Get randomized questions for the exam (non-persistent)")
     public ResponseEntity<ApiResponse<List<QuestionResponse>>> getExamQuestions(@PathVariable String examId) {
         return ResponseEntity.ok(
                 ApiResponse.success(questionService.getRandomizedQuestions(examId), "Questions fetched successfully"));
+    }
+
+    @GetMapping("/attempt/{studentExamId}/questions")
+    @PreAuthorize("hasRole('STUDENT')")
+    @Operation(summary = "Get persistent questions for a specific exam attempt")
+    public ResponseEntity<ApiResponse<List<QuestionResponse>>> getAttemptQuestions(@PathVariable String studentExamId) {
+        return ResponseEntity.ok(
+                ApiResponse.success(questionService.getQuestionsForAttempt(studentExamId), "Questions fetched successfully"));
     }
 
     @PostMapping("/save-answer")
